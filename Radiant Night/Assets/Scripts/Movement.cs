@@ -60,7 +60,6 @@ public class Movement : MonoBehaviour
                 onRightWall = true;
             }
         }
-
     }
 
     void OnCollisionExit2D(Collision2D hit)
