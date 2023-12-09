@@ -9,7 +9,9 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     public LayerMask groundLayer;
     private Collider2D playerCollider;
+    public GameObject player;
 
+    private bool onLeftWall, onRightWall;
     private bool isGrounded;
 
     private void Start()
@@ -27,9 +29,12 @@ public class Movement : MonoBehaviour
         Vector2 movement = new Vector2(horizontalInput, 0f);
 
         // Move the character using Rigidbody2D
-        GetComponent<Rigidbody2D>().velocity = new Vector2(movement.x * moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+        if (movement.x < 0 && !onLeftWall)
+            GetComponent<Rigidbody2D>().velocity = new Vector2(movement.x * moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+        if (movement.x > 0 && !onRightWall)
+            GetComponent<Rigidbody2D>().velocity = new Vector2(movement.x * moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))  //makes player jump
+        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))  //makes player jump
         {
             GetComponent<Rigidbody2D>().AddForce(jumpForce, ForceMode2D.Impulse);
         }
@@ -41,10 +46,21 @@ public class Movement : MonoBehaviour
         {
             isGrounded = true;
         }
-        else
+        else if (hit.gameObject.CompareTag("Wall"))
         {
-            isGrounded = false;
+            if (player.transform.position.x > hit.gameObject.transform.position.x)
+            {
+                onLeftWall = true;
+            }
         }
+        else if (hit.gameObject.CompareTag("Wall"))
+        {
+            if (player.transform.position.x < hit.gameObject.transform.position.x)
+            {
+                onRightWall = true;
+            }
+        }
+
     }
 
     void OnCollisionExit2D(Collision2D hit)
@@ -52,6 +68,20 @@ public class Movement : MonoBehaviour
         if (hit.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+        else if (hit.gameObject.CompareTag("Wall"))
+        {
+            if (player.transform.position.x > hit.gameObject.transform.position.x)
+            {
+                onLeftWall = false;
+            }
+        }
+        else if (hit.gameObject.CompareTag("Wall"))
+        {
+            if (player.transform.position.x < hit.gameObject.transform.position.x)
+            {
+                onRightWall = false;
+            }
         }
     }
 }
