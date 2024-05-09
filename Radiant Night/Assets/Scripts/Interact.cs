@@ -7,25 +7,40 @@ using TMPro;
 public class Interact : MonoBehaviour
 {
     public TextMeshProUGUI text;
+    bool canInteract = false;
 
-    void Start ()
+
+    private void Start ()
     {
         text.enabled = false;
     }
 
+    private void Update()
+    {
+        //if (canInteract)
+            //HandleInteraction();
+    }
 
-    void OnCollisionEnter2D (Collision2D hit)
+
+
+    void OnTriggerEnter2D (Collider2D hit)
     {
         if (hit.gameObject.CompareTag("NPC"))
         {
             text.enabled = true;
+            canInteract = true;
         }
     }
-    void OnCollisionExit2D(Collision2D hit)
+    void OnTriggerExit2D(Collider2D hit)
     {
         if (hit.gameObject.CompareTag("NPC"))
         {
             text.enabled = false;
+            canInteract = false;
         }
     }
+
+    //void HandleInteraction()
+    
+
 }
