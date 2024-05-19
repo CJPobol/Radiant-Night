@@ -22,6 +22,8 @@ public class Interact : MonoBehaviour
         {
             Debug.Log("interact button pressed");
             interactable.GetComponent<DialogueTrigger>().TriggerDialogue();
+            canInteract = false;
+            tooltip.enabled = false;
         }
     }
 

@@ -37,6 +37,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue text)
     {
         dialogue = text;
+        textElement.text = string.Empty;
         gameObject.SetActive(true);
         index = 0;
         StartCoroutine(TypeLine());
