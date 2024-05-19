@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using JetBrains.Annotations;
 
 public class Interact : MonoBehaviour
 {
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI tooltip;
     bool canInteract = false;
-
+    GameObject interactable;
 
     private void Start ()
     {
-        text.enabled = false;
+        tooltip.enabled = false;
     }
 
     private void Update()
     {
-        //if (canInteract)
-            //HandleInteraction();
+        if (Input.GetButtonDown("interact") && canInteract) 
+        {
+            Debug.Log("interact button pressed");
+            interactable.GetComponent<DialogueTrigger>().TriggerDialogue();
+        }
     }
 
 
@@ -27,20 +31,21 @@ public class Interact : MonoBehaviour
     {
         if (hit.gameObject.CompareTag("NPC"))
         {
-            text.enabled = true;
+            tooltip.enabled = true;
+            tooltip.text = "E - Talk";
             canInteract = true;
+            interactable = hit.gameObject;
         }
     }
     void OnTriggerExit2D(Collider2D hit)
     {
         if (hit.gameObject.CompareTag("NPC"))
         {
-            text.enabled = false;
+            tooltip.enabled = false;
             canInteract = false;
+            interactable = null;
         }
     }
 
-    //void HandleInteraction()
     
-
 }
