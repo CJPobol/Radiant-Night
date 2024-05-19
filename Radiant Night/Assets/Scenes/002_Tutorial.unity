@@ -439,6 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 1293616615}
+  interacting: 0
 --- !u!1 &313377470
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1000,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Charlie
   lines:
-  - We aren't far from my place, just follow me and we'll get you cleaned up.
+  - We really aren't far from our place. Just follow me and we'll get you cleaned
+    up!
 --- !u!114 &892011408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,6 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 892011407}
+  dialogueManager: {fileID: 1791510963}
 --- !u!1 &981404136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,8 +1402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a5d9bfe5632784d9415ea0c2100b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textElement: {fileID: 0}
-  dialogue: {fileID: 0}
+  textElement: {fileID: 44565299}
   textSpeed: 0.05
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
