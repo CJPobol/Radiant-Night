@@ -63,6 +63,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            FindObjectOfType<Interact>().interacting = false;
         }
     }
 }

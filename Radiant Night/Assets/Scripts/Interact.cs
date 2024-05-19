@@ -10,6 +10,7 @@ public class Interact : MonoBehaviour
     public TextMeshProUGUI tooltip;
     bool canInteract = false;
     GameObject interactable;
+    public bool interacting = false;
 
     private void Start ()
     {
@@ -20,7 +21,7 @@ public class Interact : MonoBehaviour
     {
         if (Input.GetButtonDown("interact") && canInteract) 
         {
-            Debug.Log("interact button pressed");
+            interacting = true;
             interactable.GetComponent<DialogueTrigger>().TriggerDialogue();
             canInteract = false;
             tooltip.enabled = false;
