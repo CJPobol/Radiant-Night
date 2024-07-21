@@ -2,68 +2,195 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Ink.Runtime;
+using Unity.PlasticSCM.Editor.WebApi;
+using System;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public class DialogueManager : MonoBehaviour
 {
-    public TextMeshProUGUI textElement;
-    Dialogue dialogue;
-    public float textSpeed;
-    private int index;
+    private static DialogueManager instance;
 
-    // Start is called before the first frame update
+    [Header("Params")]
+    [SerializeField] private float textSpeed;
+    private Coroutine displayLineCoroutine;
+
+    [Header("Dialogue UI")]
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private TextMeshProUGUI dialogueTextDisplay;
+
+    [Header("Choices UI")]
+    [SerializeField] private GameObject[] choices;
+    private TextMeshProUGUI[] choiceText;
+    
+    private Story currentStory;
+
+    public bool dialogueIsPlaying { get; private set; }
+    private bool canGoNextLine;
+    private bool skipDialogue;
+    private bool canSkip;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one Dialogue Manager.");
+        }    
+        
+        instance = this; 
+    }
+
     private void Start()
     {
-        textElement.text = string.Empty;
-        gameObject.SetActive(false);
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+
+        choiceText = new TextMeshProUGUI[choices.Length];
+        int index = 0;
+
+        foreach (GameObject choice in choices)
+        {
+            choiceText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
+            index++;
+        }
     }
 
     private void Update()
     {
+        if (!dialogueIsPlaying) return;
+
         if (Input.GetMouseButtonDown(0))
         {
-            if (textElement.text == dialogue.lines[index])
+            if (canGoNextLine)
             {
-                NextLine();
+                ContinueStory();
             }
             else
             {
-                StopAllCoroutines();
-                textElement.text = dialogue.lines[index];
+                skipDialogue = true;
             }
         }
+        
     }
 
-    public void StartDialogue(Dialogue text)
+    private IEnumerator CanSkip()
     {
-        dialogue = text;
-        textElement.text = string.Empty;
-        gameObject.SetActive(true);
-        index = 0;
-        StartCoroutine(TypeLine());
+        canSkip = false; //Making sure the variable is false.
+        yield return new WaitForSeconds(0.05f);
+        canSkip = true;
     }
 
-    IEnumerator TypeLine()
+    public static DialogueManager GetInstance()
     {
-        foreach (char c in dialogue.lines[index].ToCharArray()) 
+        return instance;
+    }
+
+    public void EnterDialogueMode(TextAsset inkJSON)
+    {
+        currentStory = new Story(inkJSON.text);
+        dialogueIsPlaying = true;
+        dialoguePanel.SetActive(true);
+
+        ContinueStory();
+    }
+
+    private void ContinueStory()
+    {
+        if (currentStory.canContinue)
         {
-            textElement.text += c;
-            yield return new WaitForSeconds(textSpeed);
-        }
-    }
+            if (displayLineCoroutine != null) StopCoroutine(displayLineCoroutine);
+            
+            //display dialogue line
+            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
 
-    void NextLine()
-    {
-        if (index < dialogue.lines.Length - 1)
-        {
-            index++;
-            textElement.text = string.Empty;
-            StartCoroutine (TypeLine());
         }
         else
         {
-            gameObject.SetActive(false);
-            FindObjectOfType<Interact>().interacting = false;
+            ExitDialogueMode();
         }
     }
+
+    private IEnumerator DisplayLine(string line)
+    {
+        //empty dialogue text
+        dialogueTextDisplay.text = "";
+
+        canGoNextLine = false;
+        HideChoices();
+
+        StartCoroutine(CanSkip());
+        
+        foreach(char c in line.ToCharArray())
+        {
+            if (skipDialogue && canSkip)
+            {
+                dialogueTextDisplay.text = line;
+                //Debug.Log("Dialogue Skipped: " + line);
+                break;
+            }
+            dialogueTextDisplay.text += c;
+            yield return new WaitForSeconds(textSpeed);
+        }
+
+        canGoNextLine = true;
+        skipDialogue = false;
+        canSkip = false;
+
+        //display choices if applicable
+        DisplayChoices();
+        
+    }
+
+    private void HideChoices()
+    {
+        foreach (GameObject choice in choices)
+        {
+            choice.SetActive(false);
+        }
+    }
+
+    private void ExitDialogueMode()
+    {
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+    }
+
+    private void DisplayChoices()
+    {
+        List<Choice> currentChoices = currentStory.currentChoices;
+
+        //if there's a choice to be made, the player can't continue until they pick something
+        if (currentChoices.Count > 0)
+            canGoNextLine = false;
+
+            if (currentChoices.Count > choices.Length)
+        {
+            Debug.LogError("More choices than UI can currently support. Choice count: " + currentChoices.Count);
+        }
+
+        int index = 0;
+
+        //enable all the choices the inky file demands
+        foreach (Choice choice in currentChoices)
+        {
+            choices[index].SetActive(true);
+            choiceText[index].text = choice.text;
+            index++;
+        }
+
+        //disable any extra choice elements that are not needed for this choice
+        for (int i = index; i < choices.Length; i++)
+        {
+            choices[i].SetActive(false);
+        }
+    }
+
+    public void MakeChoice(int choiceIndex)
+    {
+        skipDialogue = false;
+        currentStory.ChooseChoiceIndex(choiceIndex);
+        ContinueStory();
+    }
+
 }

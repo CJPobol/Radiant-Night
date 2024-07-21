@@ -30,7 +30,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FindObjectOfType<Interact>().interacting) return;
+        if (DialogueManager.GetInstance().dialogueIsPlaying) return;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(horizontalInput, 0f);
