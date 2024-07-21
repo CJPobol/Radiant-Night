@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -16,17 +17,20 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        player.GetComponent<SpriteRenderer>().sprite = Player.model;
-        rb = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<Collider2D>();
-
+        if (Player.model)
+        {
+            player.GetComponent<SpriteRenderer>().sprite = Player.model;
+            rb = GetComponent<Rigidbody2D>();
+            playerCollider = GetComponent<Collider2D>();
+        }
+        
         isGrounded = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (FindObjectOfType<Interact>().interacting) return;
+        if (DialogueManager.GetInstance().dialogueIsPlaying) return;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(horizontalInput, 0f);
