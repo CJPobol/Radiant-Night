@@ -2,11 +2,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Ink.Runtime;
 
 [System.Serializable]
 public class DialogueManager : MonoBehaviour
 {
-    public TextMeshProUGUI textElement;
+    private static DialogueManager instance;
+
+    [Header("Dialogue UI")]
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private TextMeshProUGUI dialogueTextDisplay;
+
+    
+    private Story currentStory;
+
+    public bool dialogueIsPlaying;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one Dialogue Manager.");
+        }    
+        
+        instance = this; 
+    }
+
+    private void Start()
+    {
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (!dialogueIsPlaying) return;
+
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            ContinueStory();
+        }
+        
+    }
+
+    public static DialogueManager GetInstance()
+    {
+        return instance;
+    }
+
+    public void EnterDialogueMode(TextAsset inkJSON)
+    {
+        currentStory = new Story(inkJSON.text);
+        dialogueIsPlaying = true;
+        dialoguePanel.SetActive(true);
+
+        ContinueStory();
+    }
+
+    private void ContinueStory()
+    {
+        if (currentStory.canContinue)
+        {
+            Debug.Log("continuing...");
+            dialogueTextDisplay.text = currentStory.Continue();
+        }
+        else
+        {
+            ExitDialogueMode();
+        }
+    }
+
+    private void ExitDialogueMode()
+    {
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+        dialogueTextDisplay.text = "";
+    }
+
+    /*public TextMeshProUGUI textElement;
     Dialogue dialogue;
     public float textSpeed;
     private int index;
@@ -65,5 +138,5 @@ public class DialogueManager : MonoBehaviour
             gameObject.SetActive(false);
             FindObjectOfType<Interact>().interacting = false;
         }
-    }
+    }*/
 }

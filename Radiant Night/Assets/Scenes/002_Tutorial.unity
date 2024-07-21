@@ -876,7 +876,6 @@ GameObject:
   - component: {fileID: 892011405}
   - component: {fileID: 892011406}
   - component: {fileID: 892011408}
-  - component: {fileID: 892011407}
   m_Layer: 0
   m_Name: Charlie
   m_TagString: NPC
@@ -986,22 +985,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &892011407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892011400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f99b21e8d40daee48a1b11088d4b41bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Charlie
-  lines:
-  - We really aren't far from our place. Just follow me and we'll get you cleaned
-    up!
 --- !u!114 &892011408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,7 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21139187cfa6094b836806ac335b2b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 892011407}
+  dialogue: {fileID: 0}
   dialogueManager: {fileID: 1791510963}
 --- !u!1 &981404136
 GameObject:
@@ -1402,8 +1385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a5d9bfe5632784d9415ea0c2100b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textElement: {fileID: 44565299}
-  textSpeed: 0.05
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
