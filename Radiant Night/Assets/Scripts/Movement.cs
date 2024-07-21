@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -16,10 +17,13 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        player.GetComponent<SpriteRenderer>().sprite = Player.model;
-        rb = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<Collider2D>();
-
+        if (Player.model)
+        {
+            player.GetComponent<SpriteRenderer>().sprite = Player.model;
+            rb = GetComponent<Rigidbody2D>();
+            playerCollider = GetComponent<Collider2D>();
+        }
+        
         isGrounded = false;
     }
 
