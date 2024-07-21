@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
+using Unity.PlasticSCM.Editor.WebApi;
+using System;
 
 [System.Serializable]
 public class DialogueManager : MonoBehaviour
@@ -13,10 +15,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueTextDisplay;
 
+    [Header("Choices UI")]
+    [SerializeField] private GameObject[] choices;
+    private TextMeshProUGUI[] choiceText;
     
     private Story currentStory;
 
-    public bool dialogueIsPlaying;
+    public bool dialogueIsPlaying { get; private set; }
 
     private void Awake()
     {
@@ -32,13 +37,22 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
+
+        choiceText = new TextMeshProUGUI[choices.Length];
+        int index = 0;
+
+        foreach (GameObject choice in choices)
+        {
+            choiceText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
+            index++;
+        }
     }
 
     private void Update()
     {
         if (!dialogueIsPlaying) return;
 
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(1)) 
         {
             ContinueStory();
         }
@@ -63,8 +77,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            Debug.Log("continuing...");
+            //display dialogue line
             dialogueTextDisplay.text = currentStory.Continue();
+
+            //display choices if applicable
+            DisplayChoices();
         }
         else
         {
@@ -79,64 +96,36 @@ public class DialogueManager : MonoBehaviour
         dialogueTextDisplay.text = "";
     }
 
-    /*public TextMeshProUGUI textElement;
-    Dialogue dialogue;
-    public float textSpeed;
-    private int index;
-
-    // Start is called before the first frame update
-    private void Start()
+    private void DisplayChoices()
     {
-        textElement.text = string.Empty;
-        gameObject.SetActive(false);
-    }
+        List<Choice> currentChoices = currentStory.currentChoices;
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        if (currentChoices.Count > choices.Length)
         {
-            if (textElement.text == dialogue.lines[index])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                textElement.text = dialogue.lines[index];
-            }
+            Debug.LogError("More choices than UI can currently support. Choice count: " + currentChoices.Count);
         }
-    }
 
-    public void StartDialogue(Dialogue text)
-    {
-        dialogue = text;
-        textElement.text = string.Empty;
-        gameObject.SetActive(true);
-        index = 0;
-        StartCoroutine(TypeLine());
-    }
+        int index = 0;
 
-    IEnumerator TypeLine()
-    {
-        foreach (char c in dialogue.lines[index].ToCharArray()) 
+        //enable all the choices the inky file demands
+        foreach (Choice choice in currentChoices)
         {
-            textElement.text += c;
-            yield return new WaitForSeconds(textSpeed);
-        }
-    }
-
-    void NextLine()
-    {
-        if (index < dialogue.lines.Length - 1)
-        {
+            choices[index].SetActive(true);
+            choiceText[index].text = choice.text;
             index++;
-            textElement.text = string.Empty;
-            StartCoroutine (TypeLine());
         }
-        else
+
+        //disable any extra choice elements that are not needed for this choice
+        for (int i = index; i < choices.Length; i++)
         {
-            gameObject.SetActive(false);
-            FindObjectOfType<Interact>().interacting = false;
+            choices[i].SetActive(false);
         }
-    }*/
+    }
+
+    public void MakeChoice(int choiceIndex)
+    {
+        currentStory.ChooseChoiceIndex(choiceIndex);
+        ContinueStory();
+    }
+
 }

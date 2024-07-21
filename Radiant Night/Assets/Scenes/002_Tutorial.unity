@@ -207,8 +207,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -270,10 +270,9 @@ GameObject:
   - component: {fileID: 50735112}
   - component: {fileID: 50735109}
   - component: {fileID: 50735108}
-  - component: {fileID: 50735113}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -426,20 +425,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   player: {fileID: 50735107}
---- !u!114 &50735113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50735107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8212594c5b46fdf479e19aea28a0f87a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltip: {fileID: 1293616615}
-  interacting: 0
 --- !u!1 &313377470
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,8 +537,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 368796485}
+  - component: {fileID: 368796486}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: DialogueManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -574,6 +560,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &368796486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368796483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20a5d9bfe5632784d9415ea0c2100b8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 1791510963}
+  dialogueTextDisplay: {fileID: 44565299}
+  dialogueIsPlaying: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +747,7 @@ GameObject:
   - component: {fileID: 624687752}
   - component: {fileID: 624687751}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -997,8 +998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21139187cfa6094b836806ac335b2b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
-  dialogueManager: {fileID: 1791510963}
+  visualCue: {fileID: 1293616613}
+  inkJSON: {fileID: 4900000, guid: 0f6e9af8203415a4ea4ad08212408d34, type: 3}
 --- !u!1 &981404136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,7 +1045,7 @@ GameObject:
   - component: {fileID: 1030678258}
   - component: {fileID: 1030678260}
   m_Layer: 7
-  m_Name: Square
+  m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1307,7 +1308,6 @@ GameObject:
   - component: {fileID: 1791510964}
   - component: {fileID: 1791510966}
   - component: {fileID: 1791510965}
-  - component: {fileID: 1791510967}
   m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -1373,18 +1373,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791510963}
   m_CullTransparentMesh: 1
---- !u!114 &1791510967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791510963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20a5d9bfe5632784d9415ea0c2100b8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
