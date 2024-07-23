@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueTextDisplay;
     [SerializeField] private TextMeshProUGUI dialogueNameDisplay;
     [SerializeField] private Animator portraitAnimator;
+    [SerializeField] private GameObject cutscenePanel;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -32,6 +33,7 @@ public class DialogueManager : MonoBehaviour
 
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAIT_TAG = "portrait";
+    private const string CUTSCENE_TAG = "cutscene";
 
     public bool dialogueIsPlaying { get; private set; }
     private bool canGoNextLine;
@@ -45,13 +47,17 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("More than one Dialogue Manager.");
         }    
         
-        instance = this; 
+        instance = this;
+
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+        cutscenePanel.SetActive(false);
+        Debug.Log("Dialogue disabled on startup");
     }
 
     private void Start()
     {
-        dialogueIsPlaying = false;
-        dialoguePanel.SetActive(false);
+        
 
         choiceText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -98,6 +104,7 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+        Debug.Log("Dialogue Panel set to active");
 
         ContinueStory();
     }
@@ -135,12 +142,19 @@ public class DialogueManager : MonoBehaviour
             switch (tagKey)
             {
                 case SPEAKER_TAG:
-                    Debug.Log("Speaker =" +  tag);
+                    Debug.Log("Speaker =" +  tagValue);
                     dialogueNameDisplay.text = tagValue;
                     break;
                 case PORTRAIT_TAG:
-                    Debug.Log("Portrait =" + tag);
+                    Debug.Log("Portrait =" + tagValue);
                     portraitAnimator.Play(tagValue);
+                    break;
+                case CUTSCENE_TAG:
+                    Debug.Log("Cutscene =" + tagValue);
+                    if (tagValue == "true")
+                        cutscenePanel.SetActive(true);
+                    else
+                        cutscenePanel.SetActive(false);
                     break;
                 default:
                     Debug.LogError("Tag is not currently being handled: " + tag);
@@ -192,6 +206,8 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
+        cutscenePanel.SetActive(false);
+        Debug.Log("Exiting Dialogue Mode.");
     }
 
     private void DisplayChoices()
