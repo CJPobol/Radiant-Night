@@ -6,6 +6,7 @@ using Ink.Runtime;
 using Unity.PlasticSCM.Editor.WebApi;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.SearchService;
 
 [System.Serializable]
 public class DialogueManager : MonoBehaviour
@@ -14,17 +15,23 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Params")]
     [SerializeField] private float textSpeed;
+
     private Coroutine displayLineCoroutine;
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueTextDisplay;
+    [SerializeField] private TextMeshProUGUI dialogueNameDisplay;
+    [SerializeField] private Animator portraitAnimator;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choiceText;
     
     private Story currentStory;
+
+    private const string SPEAKER_TAG = "speaker";
+    private const string PORTRAIT_TAG = "portrait";
 
     public bool dialogueIsPlaying { get; private set; }
     private bool canGoNextLine;
@@ -103,11 +110,42 @@ public class DialogueManager : MonoBehaviour
             
             //display dialogue line
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
-
+            
+            HandleTags(currentStory.currentTags);
         }
         else
         {
             ExitDialogueMode();
+        }
+    }
+
+    private void HandleTags(List<string> tags)
+    {
+        foreach (string tag in tags)
+        {
+            string[] splitTag = tag.Split(':');
+            if (splitTag.Length != 2)
+            {
+                Debug.LogError("Tag could not be parsed: " + tag);
+            }
+
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+
+            switch (tagKey)
+            {
+                case SPEAKER_TAG:
+                    Debug.Log("Speaker =" +  tag);
+                    dialogueNameDisplay.text = tagValue;
+                    break;
+                case PORTRAIT_TAG:
+                    Debug.Log("Portrait =" + tag);
+                    portraitAnimator.Play(tagValue);
+                    break;
+                default:
+                    Debug.LogError("Tag is not currently being handled: " + tag);
+                    break;
+            }
         }
     }
 
