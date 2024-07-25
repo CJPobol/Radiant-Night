@@ -151,15 +151,35 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case CUTSCENE_TAG:
                     Debug.Log("Cutscene =" + tagValue);
-                    if (tagValue == "true")
-                        cutscenePanel.SetActive(true);
-                    else
-                        cutscenePanel.SetActive(false);
+                    switch (tagValue)
+                    {
+                        case "on":
+                            cutscenePanel.SetActive(true);
+                            break;
+                        case "fade_out":
+                            StartCoroutine(FadeOut(cutscenePanel.GetComponent<CanvasGroup>()));
+                            break;
+                        case "off":
+                            cutscenePanel.SetActive(false);
+                            break;
+                        default:
+                            Debug.LogError("Cutscene tag not recognized: " + tagValue);
+                            break;
+                    }
                     break;
                 default:
                     Debug.LogError("Tag is not currently being handled: " + tag);
                     break;
             }
+        }
+    }
+
+    private IEnumerator FadeOut(CanvasGroup rend)
+    {
+        for (float f = 1; f > -0.02f; f -= 0.02f)
+        {
+            rend.alpha = f;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
