@@ -142,15 +142,15 @@ public class DialogueManager : MonoBehaviour
             switch (tagKey)
             {
                 case SPEAKER_TAG:
-                    Debug.Log("Speaker =" +  tagValue);
+                    //Debug.Log("Speaker =" +  tagValue);
                     dialogueNameDisplay.text = tagValue;
                     break;
                 case PORTRAIT_TAG:
-                    Debug.Log("Portrait =" + tagValue);
+                    //Debug.Log("Portrait =" + tagValue);
                     portraitAnimator.Play(tagValue);
                     break;
                 case CUTSCENE_TAG:
-                    Debug.Log("Cutscene =" + tagValue);
+                    //Debug.Log("Cutscene =" + tagValue);
                     switch (tagValue)
                     {
                         case "on":
@@ -181,6 +181,7 @@ public class DialogueManager : MonoBehaviour
             rend.alpha = f;
             yield return new WaitForSeconds(0.05f);
         }
+        cutscenePanel.SetActive(false);
     }
 
     private IEnumerator DisplayLine(string line)
