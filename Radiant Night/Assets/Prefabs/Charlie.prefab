@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0604436e0d63c2442859a33a90dd4cf7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d147d899c7095424f8d6133531fd7d79, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -359,10 +359,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1508081943047583536}
-  - component: {fileID: 6657157499018468061}
-  - component: {fileID: 8893610092250032916}
+  - component: {fileID: -1672458815608823487}
+  - component: {fileID: 5716237828700252630}
   m_Layer: 0
-  m_Name: Ashley
+  m_Name: Charlie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -385,7 +385,7 @@ Transform:
   - {fileID: 7345270055616267899}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6657157499018468061
+--- !u!114 &-1672458815608823487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -397,17 +397,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a36b87096d16dc44a7971e7d7f520e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Ashley
+  unitName: Charlie
   unitLevel: 1
-  maxHP: 100
-  currentHP: 100
+  maxHP: 150
+  currentHP: 150
   atk: 40
-  def: 30
-  speed: 90
+  def: 50
+  speed: 60
   order: 0
   critChance: 0.1
   critDmg: 1.5
---- !u!114 &8893610092250032916
+--- !u!114 &5716237828700252630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -416,7 +416,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5763318181049780808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c351f7cc846ce2e409b57a55f4b417d9, type: 3}
+  m_Script: {fileID: 11500000, guid: cf3a75739b7d2e44081ce3757016dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7161237637939237675

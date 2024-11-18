@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
+using JetBrains.Annotations;
 
 public enum battleState 
 {
@@ -16,72 +17,139 @@ public enum battleState
 public class BattleSystem : MonoBehaviour
 {
     public battleState state;
-
-    public GameObject player;
-    public GameObject enemy;
-
-    public Transform playerStation;
-    public Transform enemyStation;
-
-    Ashley playerUnit;
-    Unit enemyUnit;
-
+    public GameObject characterSelector;
     public TextMeshProUGUI namePanel;
 
-    
+    GameObject[] playerCharacter = { null, null, null, null, null };
+    public Transform[] playerStation;
 
-    // Start is called before the first frame update
-    void Start()
+    //TEMP HARDCODED ENEMY ARRAY
+    public GameObject[] enemy;
+    public Transform[] enemyStation;
+
+    public GameObject AshleyPrefab;
+    public GameObject CharliePrefab;
+
+    Unit captain = null;
+
+    Unit[] playerUnits = { null, null, null, null, null };
+    IAttackable[] playerSkillSet = { null, null, null, null, null };
+    Unit[] enemyUnits = { null, null, null, null, null };
+
+    Unit currentUnit;
+    IAttackable currentSkillSet;
+
+    void InitializePlayer(GameObject character)
     {
-        state = battleState.START;
+        bool initialized = false;
+        for (int i = 0; i < 5; i++)
+        {
+            if (playerCharacter[i] == null)
+            {
+                playerCharacter[i] = Instantiate(character, playerStation[i]);
+                Debug.Log("Selected " + character.GetComponent<Unit>().unitName + " in slot " + i);
+                initialized = true;
+                break;
+            }
+            if (captain == null)
+            {
+                captain = playerCharacter[i].GetComponent<Unit>();
+            }
+        }
+        if (!initialized)
+            Debug.LogWarning("Team is full, character not selected.");
+    }
+    public void SelectAshley()
+    {
+        InitializePlayer(AshleyPrefab);
+    }
+
+    public void SelectCharlie()
+    {
+        InitializePlayer(CharliePrefab);
+    }
+
+    public void OnSubmit()
+    {
+        characterSelector.SetActive(false);
+
         SetupBattle();
     }
 
-    void SetupBattle()
+    public void SetupBattle()
     {
-        GameObject playerStart = Instantiate(player, playerStation);
-        playerUnit = playerStart.GetComponent<Ashley>();
-        playerUnit.order = 0;
+        state = battleState.START;
 
-        GameObject enemyStart = Instantiate(enemy, enemyStation);
-        enemyUnit = enemyStart.GetComponent<Unit>();
-        enemyUnit.order = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            if (playerCharacter[i] != null) 
+            {
+                playerUnits[i] = playerCharacter[i].GetComponent<Unit>();
+                Debug.Log(playerUnits[i].unitName);
+                playerSkillSet[i] = playerCharacter[i].GetComponent<IAttackable>();
+            }
+        }
+
+        //TODO: APPLY GIFT EFFECT BASED ON CAPTAIN
+
+
+        //TEMPORARY HARD CODED ENEMIES
+        for (int i = 0; i < 5; i++)
+        {
+            enemyUnits[i] = Instantiate(enemy[i], enemyStation[i]).GetComponent<Unit>();
+        }
 
         NextInOrder();
-        
     }
 
     void NextInOrder()
     {
-        //TODO: make this work with more than 1 ally and 1 enemy.
+        //advance order
+        for (int i = 0; i < 5; i++)
+        {
+            if (playerUnits[i] != null) 
+                playerUnits[i].order += playerUnits[i].speed / 100;
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            if (enemyUnits[i] != null)
+                enemyUnits[i].order += enemyUnits[i].speed / 100; 
+        }
 
-        playerUnit.order += (float)playerUnit.speed / 100;
-        enemyUnit.order += (float)enemyUnit.speed / 100;
-
-        if (playerUnit.order > enemyUnit.order)
+        //determine largest order value in either array
+        Unit nextPlayer = playerUnits[0];
+        Unit nextEnemy = enemyUnits[0];
+        IAttackable nextSkillSet = playerSkillSet[0];
+        for (int i = 1; i < 5; i++)
+        {
+            if (playerUnits[i] == null) continue;
+            if (playerUnits[i].order > nextPlayer.order)
+            {
+                nextPlayer = playerUnits[i];
+                nextSkillSet = playerSkillSet[i];
+            }
+        }
+        for (int i = 1; i < 5; i++)
+        {
+            if (enemyUnits[i] == null) continue;
+            if (enemyUnits[i].order > nextEnemy.order)
+            {
+                nextEnemy = enemyUnits[i];
+            }
+        }
+        if (nextPlayer.order > nextEnemy.order)
         {
             state = battleState.PLAYERTURN;
-            PlayerTurn();
-        }
-        else if (enemyUnit.order > playerUnit.order)
-        {
-            state = battleState.ENEMYTURN;
-            EnemyTurn();
+            currentUnit = nextPlayer;
+            currentSkillSet = nextSkillSet;
         }
         else
         {
-            Debug.LogError("Player and Enemy have the same speed, what do we do??");
+            state = battleState.ENEMYTURN;
+            currentUnit = nextEnemy;
         }
-    }
 
-    void PlayerTurn()
-    {
-        namePanel.text = playerUnit.unitName;
-    }
-
-    void EnemyTurn()
-    {
-        namePanel.text = enemyUnit.unitName;
+        namePanel.text = currentUnit.unitName; 
     }
 
     public void OnBasicAtk()
@@ -90,13 +158,29 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
-
-        playerUnit.BasicAttack(enemyUnit);
-        
-        playerUnit.order = 0;
+        currentSkillSet.BasicAtk();
+        currentUnit.order = 0;
+        NextInOrder();
+    }
+    public void OnSpecialAtk1()
+    {
+        if (state != battleState.PLAYERTURN)
+        {
+            return;
+        }
+        currentSkillSet.SpecialAtk1();
+        currentUnit.order = 0;
         NextInOrder();
     }
 
-
-
+    public void OnSpecialAtk2()
+    {
+        if (state != battleState.PLAYERTURN)
+        {
+            return;
+        }
+        currentSkillSet.SpecialAtk2();
+        currentUnit.order = 0;
+        NextInOrder();
+    }
 }

@@ -12,10 +12,9 @@ public class Unit : MonoBehaviour
 
     public int atk;
     public int def;
-    public int speed;
+    public float speed;
     public float order;
 
     public float critChance;
     public float critDmg;
-
 }
