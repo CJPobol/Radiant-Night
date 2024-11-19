@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEditor;
-using JetBrains.Annotations;
+using UnityEngine;
 
 public enum battleState 
 {
@@ -35,6 +32,7 @@ public class BattleSystem : MonoBehaviour
     Unit[] playerUnits = { null, null, null, null, null };
     IAttackable[] playerSkillSet = { null, null, null, null, null };
     Unit[] enemyUnits = { null, null, null, null, null };
+    IAttackable[] enemySkillSet = { null, null, null, null, null };
 
     Unit currentUnit;
     IAttackable currentSkillSet;
@@ -97,6 +95,7 @@ public class BattleSystem : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             enemyUnits[i] = Instantiate(enemy[i], enemyStation[i]).GetComponent<Unit>();
+            enemySkillSet[i] = enemy[i].GetComponent<IAttackable>();
         }
 
         NextInOrder();
@@ -117,16 +116,21 @@ public class BattleSystem : MonoBehaviour
         }
 
         //determine largest order value in either array
+        //      NOTE: if a player and an enemy have the same order value, player goes first. If two players
+        //      have the same order, the player that came first in the array is chosen, meaning the one
+        //      the user selected on the character select screen first.
+
         Unit nextPlayer = playerUnits[0];
         Unit nextEnemy = enemyUnits[0];
-        IAttackable nextSkillSet = playerSkillSet[0];
+        IAttackable PnextSkillSet = playerSkillSet[0];
+        IAttackable EnextSkillSet = enemySkillSet[0];
         for (int i = 1; i < 5; i++)
         {
             if (playerUnits[i] == null) continue;
             if (playerUnits[i].order > nextPlayer.order)
             {
                 nextPlayer = playerUnits[i];
-                nextSkillSet = playerSkillSet[i];
+                PnextSkillSet = playerSkillSet[i];
             }
         }
         for (int i = 1; i < 5; i++)
@@ -135,23 +139,38 @@ public class BattleSystem : MonoBehaviour
             if (enemyUnits[i].order > nextEnemy.order)
             {
                 nextEnemy = enemyUnits[i];
+                EnextSkillSet = enemySkillSet[i];
             }
         }
-        if (nextPlayer.order > nextEnemy.order)
+        if (nextPlayer.order >= nextEnemy.order)
         {
             state = battleState.PLAYERTURN;
             currentUnit = nextPlayer;
-            currentSkillSet = nextSkillSet;
+            currentSkillSet = PnextSkillSet;
         }
-        else
+        else if (nextPlayer.order < nextEnemy.order)
         {
             state = battleState.ENEMYTURN;
             currentUnit = nextEnemy;
+            currentSkillSet = EnextSkillSet;
+            StartCoroutine(EnemyAction());
         }
-
+        
         namePanel.text = currentUnit.unitName; 
     }
 
+    public IEnumerator EnemyAction()
+    {
+        if (state != battleState.ENEMYTURN)
+        {
+            yield break;
+        }
+        currentSkillSet.BasicAtk();
+        currentUnit.order = 0;
+        yield return new WaitForSeconds(2f);
+        NextInOrder();
+    }
+    
     public void OnBasicAtk()
     {
         if (state != battleState.PLAYERTURN)
