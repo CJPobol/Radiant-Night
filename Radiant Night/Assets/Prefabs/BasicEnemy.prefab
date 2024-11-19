@@ -437,6 +437,7 @@ MonoBehaviour:
   unitLevel: 1
   maxHP: 100
   currentHP: 100
+  healthbar: {fileID: 988083409623175655}
   atk: 50
   def: 50
   speed: 60

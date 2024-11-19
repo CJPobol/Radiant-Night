@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Unit : MonoBehaviour
 
     public int maxHP;
     public int currentHP;
+    public Slider healthbar;
 
     public int atk;
     public int def;

@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class Ashley : MonoBehaviour, IAttackable
 {
-    public void BasicAtk()
+    public void BasicAtk(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses basic attack!");
-        /*int rawDamage = (int)System.Math.Round(this.atk * 0.30);
-        //TODO: determine critical hits based on random chance
-        int defendedDamage = enemy.def / 10;
-        enemy.currentHP -= rawDamage - defendedDamage;*/
+        int rawDamage = (int)System.Math.Round(self.atk * 0.30);
+        
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            int defendedDamage = enemies[i].def / 10;
+            enemies[i].currentHP -= rawDamage - defendedDamage;
+        }
     }
 
-    public void SpecialAtk1()
+    public void SpecialAtk1(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses special attack 1!");
+
     }
 
-    public void SpecialAtk2()
+    public void SpecialAtk2(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses special attack 2!");
     }
