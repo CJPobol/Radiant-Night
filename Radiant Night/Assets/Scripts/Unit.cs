@@ -19,4 +19,17 @@ public class Unit : MonoBehaviour
 
     public float critChance;
     public float critDmg;
+
+    [HideInInspector] public bool isSelected;
+
+    public void Select()
+    {
+        isSelected = true;
+    }
+
+    public void Deselect()
+    {
+        isSelected = false;
+    }
+
 }

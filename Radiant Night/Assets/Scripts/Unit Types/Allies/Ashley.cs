@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Ashley : MonoBehaviour, IAttackable
 {
+    GameObject combatManager;
+    BattleSystem battle;
+
+    private void Start()
+    {
+        combatManager = GameObject.FindObjectOfType<BattleSystem>()?.gameObject;
+        battle = combatManager.GetComponent<BattleSystem>();
+    }
+
     public void BasicAtk(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses basic attack!");
@@ -14,17 +23,24 @@ public class Ashley : MonoBehaviour, IAttackable
             int defendedDamage = enemies[i].def / 10;
             enemies[i].currentHP -= rawDamage - defendedDamage;
         }
+        battle.turnActive = false;
+        self.order = 0;
+        battle.NextInOrder();
     }
 
     public void SpecialAtk1(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses special attack 1!");
+        self.order = 0;
+        battle.NextInOrder();
 
     }
 
     public void SpecialAtk2(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses special attack 2!");
+        self.order = 0;
+        battle.NextInOrder();
     }
 
 }

@@ -1,7 +1,10 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.UI.CanvasScaler;
 
 public enum battleState 
 {
@@ -14,15 +17,18 @@ public enum battleState
 
 public class BattleSystem : MonoBehaviour
 {
-    public battleState state;
+    [HideInInspector] public battleState state;
     public GameObject characterSelector;
     public TextMeshProUGUI namePanel;
 
     GameObject[] playerCharacter = { null, null, null, null, null };
+    public GameObject[] playerSelectors;
     public Transform[] playerStation;
 
     //TEMP HARDCODED ENEMY ARRAY
     public GameObject[] enemy;
+
+    public GameObject[] enemySelectors;
     public Transform[] enemyStation;
 
     public GameObject AshleyPrefab;
@@ -37,6 +43,25 @@ public class BattleSystem : MonoBehaviour
 
     Unit currentUnit;
     IAttackable currentSkillSet;
+
+    [HideInInspector] public bool isSelectingAllyUnit = false;
+    [HideInInspector] public bool isSelectingEnemyUnit = false;
+
+    [HideInInspector] public Unit selectedUnit = null;
+
+    [HideInInspector] public bool turnActive;
+
+    private void Start()
+    {
+        for (int i = 0; i < enemySelectors.Length; i++)
+        {
+            enemySelectors[i].SetActive(false);
+        }
+        for (int i = 0; i < playerSelectors.Length; i++)
+        {
+            playerSelectors[i].SetActive(false);
+        }
+    }
 
     void UpdateHealthbars()
     {
@@ -89,6 +114,11 @@ public class BattleSystem : MonoBehaviour
         SetupBattle();
     }
 
+    public void OnSelection(GameObject characterStation)
+    {
+        selectedUnit = characterStation.GetComponentInChildren<Unit>();
+    }
+
     public void SetupBattle()
     {
         state = battleState.START;
@@ -116,7 +146,7 @@ public class BattleSystem : MonoBehaviour
         NextInOrder();
     }
 
-    void NextInOrder()
+    public void NextInOrder()
     {
         UpdateHealthbars();
         //advance order
@@ -193,9 +223,10 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
+        turnActive = true;
         currentSkillSet.BasicAtk(currentUnit, playerUnits, enemyUnits);
         currentUnit.order = 0;
-        NextInOrder();
+        
     }
     public void OnSpecialAtk1()
     {
@@ -205,7 +236,7 @@ public class BattleSystem : MonoBehaviour
         }
         currentSkillSet.SpecialAtk1(currentUnit, playerUnits, enemyUnits);
         currentUnit.order = 0;
-        NextInOrder();
+        
     }
 
     public void OnSpecialAtk2()
@@ -216,6 +247,6 @@ public class BattleSystem : MonoBehaviour
         }
         currentSkillSet.SpecialAtk2(currentUnit, playerUnits, enemyUnits);
         currentUnit.order = 0;
-        NextInOrder();
+        
     }
 }
