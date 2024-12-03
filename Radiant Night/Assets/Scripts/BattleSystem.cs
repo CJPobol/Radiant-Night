@@ -1,6 +1,10 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.UI.CanvasScaler;
 
 public enum battleState 
 {
@@ -13,15 +17,18 @@ public enum battleState
 
 public class BattleSystem : MonoBehaviour
 {
-    public battleState state;
+    [HideInInspector] public battleState state;
     public GameObject characterSelector;
     public TextMeshProUGUI namePanel;
 
     GameObject[] playerCharacter = { null, null, null, null, null };
+    public GameObject[] playerSelectors;
     public Transform[] playerStation;
 
     //TEMP HARDCODED ENEMY ARRAY
     public GameObject[] enemy;
+
+    public GameObject[] enemySelectors;
     public Transform[] enemyStation;
 
     public GameObject AshleyPrefab;
@@ -36,6 +43,39 @@ public class BattleSystem : MonoBehaviour
 
     Unit currentUnit;
     IAttackable currentSkillSet;
+
+    [HideInInspector] public bool isSelectingAllyUnit = false;
+    [HideInInspector] public bool isSelectingEnemyUnit = false;
+
+    [HideInInspector] public Unit selectedUnit = null;
+
+    [HideInInspector] public bool turnActive;
+
+    private void Start()
+    {
+        for (int i = 0; i < enemySelectors.Length; i++)
+        {
+            enemySelectors[i].SetActive(false);
+        }
+        for (int i = 0; i < playerSelectors.Length; i++)
+        {
+            playerSelectors[i].SetActive(false);
+        }
+    }
+
+    void UpdateHealthbars()
+    {
+        for (int i = 0; i < playerUnits.Length; i++)
+        {
+            if (playerUnits[i] == null) continue;
+            playerUnits[i].healthbar.GetComponent<Slider>().value = (playerUnits[i].currentHP * 100) / playerUnits[i].maxHP;
+        }
+        for (int i = 0; i < enemyUnits.Length; i++)
+        {
+            if (enemyUnits[i] == null) continue;
+            enemyUnits[i].healthbar.GetComponent<Slider>().value = (enemyUnits[i].currentHP * 100) / enemyUnits[i].maxHP;
+        }
+    }
 
     void InitializePlayer(GameObject character)
     {
@@ -74,6 +114,11 @@ public class BattleSystem : MonoBehaviour
         SetupBattle();
     }
 
+    public void OnSelection(GameObject characterStation)
+    {
+        selectedUnit = characterStation.GetComponentInChildren<Unit>();
+    }
+
     public void SetupBattle()
     {
         state = battleState.START;
@@ -101,8 +146,9 @@ public class BattleSystem : MonoBehaviour
         NextInOrder();
     }
 
-    void NextInOrder()
+    public void NextInOrder()
     {
+        UpdateHealthbars();
         //advance order
         for (int i = 0; i < 5; i++)
         {
@@ -165,7 +211,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield break;
         }
-        currentSkillSet.BasicAtk();
+        currentSkillSet.BasicAtk(currentUnit, playerUnits, enemyUnits);
         currentUnit.order = 0;
         yield return new WaitForSeconds(2f);
         NextInOrder();
@@ -177,9 +223,10 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
-        currentSkillSet.BasicAtk();
-        currentUnit.order = 0;
-        NextInOrder();
+        turnActive = true;
+        currentUnit.cooldown -= 1;
+        currentSkillSet.BasicAtk(currentUnit, playerUnits, enemyUnits);
+        //NOTE: immediately goes back to NextInOrder with this function call ^
     }
     public void OnSpecialAtk1()
     {
@@ -187,9 +234,13 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
-        currentSkillSet.SpecialAtk1();
-        currentUnit.order = 0;
-        NextInOrder();
+        if (currentUnit.cooldown > 0)
+        {
+            return;
+        }
+        turnActive = true;
+        currentSkillSet.SpecialAtk1(currentUnit, playerUnits, enemyUnits);
+        //NOTE: immediately goes back to NextInOrder with this function call ^
     }
 
     public void OnSpecialAtk2()
@@ -198,8 +249,7 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
-        currentSkillSet.SpecialAtk2();
-        currentUnit.order = 0;
-        NextInOrder();
+        currentSkillSet.SpecialAtk2(currentUnit, playerUnits, enemyUnits);
+        //NOTE: immediately goes back to NextInOrder with this function call ^
     }
 }

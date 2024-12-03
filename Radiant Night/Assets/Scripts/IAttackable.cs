@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IAttackable
 {
-    void BasicAtk();
-    void SpecialAtk1();
-    void SpecialAtk2();
+    void BasicAtk(Unit self, Unit[] allies, Unit[] enemies);
+    void SpecialAtk1(Unit self, Unit[] allies, Unit[] enemies);
+    void SpecialAtk2(Unit self, Unit[] allies, Unit[] enemies);
 }
