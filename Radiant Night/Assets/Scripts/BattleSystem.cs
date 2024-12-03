@@ -235,7 +235,7 @@ public class BattleSystem : MonoBehaviour
             return;
         }
         currentSkillSet.SpecialAtk1(currentUnit, playerUnits, enemyUnits);
-        currentUnit.order = 0;
+        
         
     }
 
@@ -246,7 +246,6 @@ public class BattleSystem : MonoBehaviour
             return;
         }
         currentSkillSet.SpecialAtk2(currentUnit, playerUnits, enemyUnits);
-        currentUnit.order = 0;
         
     }
 }
