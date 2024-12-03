@@ -36,9 +36,14 @@ public class Charlie : MonoBehaviour, IAttackable
         enemy.currentHP -= self.atk;
         battle.isSelectingEnemyUnit = false;
         battle.selectedUnit.Deselect();
+        battle.selectedUnit = null;
         Debug.Log("Action complete! Ending Charlie's turn...");
         battle.turnActive = false;
         self.order = 0;
+        for (int i = 0; i < battle.enemySelectors.Length; i++)
+        {
+            battle.enemySelectors[i].SetActive(false);
+        }
         battle.NextInOrder();
     }
 

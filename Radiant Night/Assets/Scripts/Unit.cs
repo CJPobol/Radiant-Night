@@ -20,6 +20,8 @@ public class Unit : MonoBehaviour
     public float critChance;
     public float critDmg;
 
+    public int cooldown;
+
     [HideInInspector] public bool isSelected;
 
     public void Select()

@@ -224,9 +224,9 @@ public class BattleSystem : MonoBehaviour
             return;
         }
         turnActive = true;
+        currentUnit.cooldown -= 1;
         currentSkillSet.BasicAtk(currentUnit, playerUnits, enemyUnits);
-        currentUnit.order = 0;
-        
+        //NOTE: immediately goes back to NextInOrder with this function call ^
     }
     public void OnSpecialAtk1()
     {
@@ -234,9 +234,13 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
+        if (currentUnit.cooldown > 0)
+        {
+            return;
+        }
+        turnActive = true;
         currentSkillSet.SpecialAtk1(currentUnit, playerUnits, enemyUnits);
-        
-        
+        //NOTE: immediately goes back to NextInOrder with this function call ^
     }
 
     public void OnSpecialAtk2()
@@ -246,6 +250,6 @@ public class BattleSystem : MonoBehaviour
             return;
         }
         currentSkillSet.SpecialAtk2(currentUnit, playerUnits, enemyUnits);
-        
+        //NOTE: immediately goes back to NextInOrder with this function call ^
     }
 }

@@ -31,9 +31,32 @@ public class Ashley : MonoBehaviour, IAttackable
     public void SpecialAtk1(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses special attack 1!");
-        self.order = 0;
-        battle.NextInOrder();
+        for (int i = 0; i < battle.enemySelectors.Length; i++)
+        {
+            battle.playerSelectors[i].SetActive(true);
+        }
+        StartCoroutine(HandleSpAtk1(self));
+    }
 
+    IEnumerator HandleSpAtk1(Unit self)
+    {
+        self.order = 0;
+        battle.isSelectingAllyUnit = true;
+        Debug.Log("Waiting for ally selection...");
+        yield return new WaitUntil(() => battle.selectedUnit != null);
+
+        Debug.Log($"Selected Enemy {battle.selectedUnit.unitName}");
+        Unit ally = battle.selectedUnit;
+
+        ally.order += 100;
+
+        battle.selectedUnit.Deselect();
+        battle.selectedUnit = null;
+        Debug.Log("Action complete! Ending Ashley's turn...");
+
+        
+        self.cooldown = 2;
+        battle.NextInOrder();
     }
 
     public void SpecialAtk2(Unit self, Unit[] allies, Unit[] enemies)
