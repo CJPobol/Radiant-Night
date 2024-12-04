@@ -17,6 +17,8 @@ public enum battleState
 
 public class BattleSystem : MonoBehaviour
 {
+    [SerializeField] private GameObject combatSystem;
+
     [HideInInspector] public battleState state;
     public GameObject characterSelector;
     public TextMeshProUGUI namePanel;
@@ -61,6 +63,7 @@ public class BattleSystem : MonoBehaviour
         {
             playerSelectors[i].SetActive(false);
         }
+        
     }
 
     void UpdateHealthbars()
@@ -69,12 +72,56 @@ public class BattleSystem : MonoBehaviour
         {
             if (playerUnits[i] == null) continue;
             playerUnits[i].healthbar.GetComponent<Slider>().value = (playerUnits[i].currentHP * 100) / playerUnits[i].maxHP;
+            if (playerUnits[i].currentHP <= 0)
+            {
+                playerUnits[i].isDead = true;
+                playerUnits[i].order = 0;
+                CheckWinLoss();
+            }
         }
         for (int i = 0; i < enemyUnits.Length; i++)
         {
             if (enemyUnits[i] == null) continue;
             enemyUnits[i].healthbar.GetComponent<Slider>().value = (enemyUnits[i].currentHP * 100) / enemyUnits[i].maxHP;
+            if (enemyUnits[i].currentHP <= 0)
+            {
+                enemyUnits[i].isDead = true;
+                Debug.Log("you killed an enemy!");
+                enemyUnits[i].order = 0;
+                CheckWinLoss();
+            }
         }
+    }
+
+    void CheckWinLoss()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (playerUnits[i] != null && !playerUnits[i].isDead)
+                break;
+            state = battleState.LOSE;
+            EndBattle();
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            if (enemyUnits[i] != null && !enemyUnits[i].isDead)
+                break;
+            state = battleState.WIN;
+            EndBattle();
+        }
+    }
+
+    void EndBattle()
+    {
+        if (state == battleState.WIN)
+        {
+            Debug.Log("You Win!");
+        }
+        if (state == battleState.LOSE)
+        {
+            Debug.Log("You Lose.");
+        }
+        combatSystem.gameObject.SetActive(false);
     }
 
     void InitializePlayer(GameObject character)
@@ -137,10 +184,14 @@ public class BattleSystem : MonoBehaviour
 
 
         //TEMPORARY HARD CODED ENEMIES
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < enemy.Length; i++)
         {
-            enemyUnits[i] = Instantiate(enemy[i], enemyStation[i]).GetComponent<Unit>();
-            enemySkillSet[i] = enemy[i].GetComponent<IAttackable>();
+            if (enemy[i] != null)
+            {
+                enemyUnits[i] = Instantiate(enemy[i], enemyStation[i]).GetComponent<Unit>();
+                enemySkillSet[i] = enemy[i].GetComponent<IAttackable>();
+            }
+                
         }
 
         NextInOrder();
@@ -152,12 +203,12 @@ public class BattleSystem : MonoBehaviour
         //advance order
         for (int i = 0; i < 5; i++)
         {
-            if (playerUnits[i] != null) 
+            if (playerUnits[i] != null && !playerUnits[i].isDead) 
                 playerUnits[i].order += playerUnits[i].speed / 100;
         }
         for (int i = 0; i < 5; i++)
         {
-            if (enemyUnits[i] != null)
+            if (enemyUnits[i] != null && !enemyUnits[i].isDead)
                 enemyUnits[i].order += enemyUnits[i].speed / 100; 
         }
 
@@ -170,7 +221,7 @@ public class BattleSystem : MonoBehaviour
         Unit nextEnemy = enemyUnits[0];
         IAttackable PnextSkillSet = playerSkillSet[0];
         IAttackable EnextSkillSet = enemySkillSet[0];
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < playerUnits.Length; i++)
         {
             if (playerUnits[i] == null) continue;
             if (playerUnits[i].order > nextPlayer.order)
@@ -179,7 +230,7 @@ public class BattleSystem : MonoBehaviour
                 PnextSkillSet = playerSkillSet[i];
             }
         }
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < enemyUnits.Length; i++)
         {
             if (enemyUnits[i] == null) continue;
             if (enemyUnits[i].order > nextEnemy.order)

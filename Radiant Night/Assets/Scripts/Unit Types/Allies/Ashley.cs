@@ -20,8 +20,11 @@ public class Ashley : MonoBehaviour, IAttackable
         
         for (int i = 0; i < enemies.Length; i++)
         {
-            int defendedDamage = enemies[i].def / 10;
-            enemies[i].currentHP -= rawDamage - defendedDamage;
+            if (enemies[i] != null)
+            {
+                int defendedDamage = enemies[i].def / 10;
+                enemies[i].currentHP -= rawDamage - defendedDamage;
+            }
         }
         battle.turnActive = false;
         self.order = 0;
