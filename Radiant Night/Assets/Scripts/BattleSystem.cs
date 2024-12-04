@@ -17,9 +17,13 @@ public enum battleState
 
 public class BattleSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject combatSystem;
+    private static BattleSystem instance;
+
+    public GameObject combatSystem;
 
     [HideInInspector] public battleState state;
+
+
     public GameObject characterSelector;
     public TextMeshProUGUI namePanel;
 
@@ -27,8 +31,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject[] playerSelectors;
     public Transform[] playerStation;
 
-    //TEMP HARDCODED ENEMY ARRAY
-    public GameObject[] enemy;
+    private GameObject[] enemy = { null, null, null, null, null };
 
     public GameObject[] enemySelectors;
     public Transform[] enemyStation;
@@ -53,6 +56,17 @@ public class BattleSystem : MonoBehaviour
 
     [HideInInspector] public bool turnActive;
 
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one BattleSystem.");
+        }
+
+        instance = this;
+        combatSystem.gameObject.SetActive(false);
+    }
+
     private void Start()
     {
         for (int i = 0; i < enemySelectors.Length; i++)
@@ -64,6 +78,10 @@ public class BattleSystem : MonoBehaviour
             playerSelectors[i].SetActive(false);
         }
         
+    }
+    public static BattleSystem GetInstance()
+    {
+        return instance;
     }
 
     void UpdateHealthbars()
@@ -93,35 +111,16 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    void CheckWinLoss()
+    public void InitializeEnemies(GameObject[] enemies)
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < enemies.Length; i++)
         {
-            if (playerUnits[i] != null && !playerUnits[i].isDead)
-                break;
-            state = battleState.LOSE;
-            EndBattle();
+            if (enemies[i] == null) continue;
+            Debug.Log(enemy[i] + " " + enemies[i]);
+            enemy[i] = enemies[i];
+            enemyUnits[i] = Instantiate(enemies[i], enemyStation[i]).GetComponent<Unit>();
+            enemySkillSet[i] = enemies[i].GetComponent<IAttackable>();
         }
-        for (int i = 0; i < 5; i++)
-        {
-            if (enemyUnits[i] != null && !enemyUnits[i].isDead)
-                break;
-            state = battleState.WIN;
-            EndBattle();
-        }
-    }
-
-    void EndBattle()
-    {
-        if (state == battleState.WIN)
-        {
-            Debug.Log("You Win!");
-        }
-        if (state == battleState.LOSE)
-        {
-            Debug.Log("You Lose.");
-        }
-        combatSystem.gameObject.SetActive(false);
     }
 
     void InitializePlayer(GameObject character)
@@ -182,17 +181,6 @@ public class BattleSystem : MonoBehaviour
 
         //TODO: APPLY GIFT EFFECT BASED ON CAPTAIN
 
-
-        //TEMPORARY HARD CODED ENEMIES
-        for (int i = 0; i < enemy.Length; i++)
-        {
-            if (enemy[i] != null)
-            {
-                enemyUnits[i] = Instantiate(enemy[i], enemyStation[i]).GetComponent<Unit>();
-                enemySkillSet[i] = enemy[i].GetComponent<IAttackable>();
-            }
-                
-        }
 
         NextInOrder();
     }
@@ -302,5 +290,36 @@ public class BattleSystem : MonoBehaviour
         }
         currentSkillSet.SpecialAtk2(currentUnit, playerUnits, enemyUnits);
         //NOTE: immediately goes back to NextInOrder with this function call ^
+    }
+
+    void CheckWinLoss()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (playerUnits[i] != null && !playerUnits[i].isDead)
+                break;
+            state = battleState.LOSE;
+            EndBattle();
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            if (enemyUnits[i] != null && !enemyUnits[i].isDead)
+                break;
+            state = battleState.WIN;
+            EndBattle();
+        }
+    }
+
+    void EndBattle()
+    {
+        if (state == battleState.WIN)
+        {
+            Debug.Log("You Win!");
+        }
+        if (state == battleState.LOSE)
+        {
+            Debug.Log("You Lose.");
+        }
+        combatSystem.gameObject.SetActive(false);
     }
 }
