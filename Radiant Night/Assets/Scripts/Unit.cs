@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour
     public int cooldown;
 
     [HideInInspector] public bool isSelected;
+    [HideInInspector] public bool isDead;
 
     public void Select()
     {

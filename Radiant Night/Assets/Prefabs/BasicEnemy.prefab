@@ -445,7 +445,9 @@ MonoBehaviour:
   order: 0
   critChance: 0.1
   critDmg: 1.5
+  cooldown: 0
   isSelected: 0
+  isDead: 0
 --- !u!114 &7167636541280392272
 MonoBehaviour:
   m_ObjectHideFlags: 0
