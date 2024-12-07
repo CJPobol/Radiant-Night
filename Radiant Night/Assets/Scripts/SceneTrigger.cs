@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ public class SceneTrigger : MonoBehaviour
 {
     public bool locationTrigger;
     public Vector2 location;
+    public string locationName;
 
     public bool sceneTrigger;
     public string sceneName;
@@ -16,7 +18,7 @@ public class SceneTrigger : MonoBehaviour
 
     public GameObject player;
     public GameObject visualCue;
-
+    
     private bool playerInRange;
 
     private void Start()
@@ -42,6 +44,7 @@ public class SceneTrigger : MonoBehaviour
         {
             playerInRange = true;
             visualCue.SetActive(true);
+            visualCue.GetComponent<TextMeshProUGUI>().text = "E - " + locationName;
         }
     }
 
