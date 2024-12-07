@@ -18,7 +18,7 @@ This is {playerName}, I met her out in the forest. She needs a spot to crash and
 -> introChoice
 
 === introChoice ===
-Name’s Jacke, pronouns are he/they. Nice to meet ya! #speaker: Jacke #portrait: jacke_cheery
+Name’s Jacke, nice to meet ya! #speaker: Jacke #portrait: jacke_cheery
 
     * Wow, you're really cool!
         ~ JackeFriendship += 10
