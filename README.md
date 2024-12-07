@@ -8,4 +8,7 @@ The game currently has a functioning dialogue system which will be heavily utili
 ![image](https://github.com/user-attachments/assets/162d70a9-846e-4e08-8681-e77cfe47e467)
 
 
-The combat system is currently in development.
+The combat system is currently in early development, with two character kits in the works.
+![image](https://github.com/user-attachments/assets/3e026318-fcbf-4483-8851-4fd39d34e3b7)
+
+NOTE: All art is temporary! Many models are placeholders or will be improved upon in future development.
