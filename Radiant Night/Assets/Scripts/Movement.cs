@@ -68,10 +68,7 @@ public class Movement : MonoBehaviour
             {
                 onLeftWall = true;
             }
-        }
-        else if (hit.gameObject.CompareTag("Wall"))
-        {
-            if (player.transform.position.x < hit.gameObject.transform.position.x)
+            else if (player.transform.position.x < hit.gameObject.transform.position.x)
             {
                 onRightWall = true;
             }
@@ -90,9 +87,6 @@ public class Movement : MonoBehaviour
             {
                 onLeftWall = false;
             }
-        }
-        else if (hit.gameObject.CompareTag("Wall"))
-        {
             if (player.transform.position.x < hit.gameObject.transform.position.x)
             {
                 onRightWall = false;

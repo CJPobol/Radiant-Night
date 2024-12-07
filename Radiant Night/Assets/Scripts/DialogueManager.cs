@@ -57,8 +57,6 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        
-
         choiceText = new TextMeshProUGUI[choices.Length];
         int index = 0;
 

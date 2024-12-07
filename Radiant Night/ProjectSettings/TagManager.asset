@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Wall
   - NPC
+  - CombatUnit
   layers:
   - Default
   - TransparentFX
@@ -52,4 +53,10 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 2364575489
+    locked: 0
+  - name: Overlay Backdrop
+    uniqueID: 3837962129
+    locked: 0
+  - name: Overlay Object
+    uniqueID: 1115721357
     locked: 0
