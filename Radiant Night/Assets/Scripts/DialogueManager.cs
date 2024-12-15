@@ -7,6 +7,7 @@ using Unity.PlasticSCM.Editor.WebApi;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.SearchService;
+using UnityEngine.Windows;
 
 [System.Serializable]
 public class DialogueManager : MonoBehaviour
@@ -71,7 +72,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (!dialogueIsPlaying) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (UnityEngine.Input.GetMouseButtonDown(0))
         {
             if (canGoNextLine)
             {
@@ -145,6 +146,8 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case PORTRAIT_TAG:
                     //Debug.Log("Portrait =" + tagValue);
+                    string name = tagValue.Split('_')[0];
+                    dialogueNameDisplay.text = name[0].ToString().ToUpper() + name.Substring(1);
                     portraitAnimator.Play(tagValue);
                     break;
                 case CUTSCENE_TAG:

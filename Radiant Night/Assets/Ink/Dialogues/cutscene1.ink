@@ -8,17 +8,17 @@ VAR NatalieFriendship = 0
 
 === START ===
 
-Okay, I need you to try and relax. #speaker:Natalie #portrait:natalie_neutral
+Okay, I need you to try and relax. #portrait:natalie_neutral
 
-You find yourself unable to move as this woman stares down at you. Has she strapped you down? #speaker:Narrator #portrait:default
+You find yourself unable to move as this woman stares down at you. Has she strapped you down? #portrait:default
 
-You want me to relax? Are you serious?! How am I supposed to relax right now?!  #speaker:{playerName} #portrait:ashley_angry
+You want me to relax? Are you serious?! How am I supposed to relax right now?!  #portrait:ashley_angry
 
-I know, I know. Just try, okay? This is only gonna hurt more if you’re tense. #speaker: Natalie #portrait:natalie_neutral
+I know, I know. Just try, okay? This is only gonna hurt more if you’re tense. #portrait:natalie_neutral
 
-Hurt…? What are you doing that’s gonna hurt?! I thought I was getting exiled to Earth… #speaker:{playerName} #portrait:ashley_shock
+Hurt…? What are you doing that’s gonna hurt?! I thought I was getting exiled to Earth… #portrait:ashley_shock
 
-You are. I’m only here to fraction your chip before they send you off. #speaker:Natalie #portrait:natalie_neutral
+You are. I’m only here to fraction your chip before they send you off. #portrait:natalie_neutral
 
 …What is that supposed to mean? #speaker:{playerName} #portrait:ashley_shock
 

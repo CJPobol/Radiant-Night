@@ -31,4 +31,10 @@ public class NPCMovement : MonoBehaviour
             }
         }
     }
+
+    void MoveToNewPoint(Vector3 coord)
+    {
+        this.transform.position =
+                Vector3.MoveTowards(this.transform.position, coord, speed);
+    }
 }
