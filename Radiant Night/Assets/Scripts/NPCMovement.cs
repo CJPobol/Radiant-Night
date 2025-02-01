@@ -13,7 +13,7 @@ public class NPCMovement : MonoBehaviour
 
     private void Update()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        if (!DialogueManager.GetInstance().dialogueIsPlaying)
         {
             int i = 0;
             this.transform.position = 

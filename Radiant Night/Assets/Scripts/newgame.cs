@@ -18,6 +18,7 @@ public class newgame : MonoBehaviour
     {
         Debug.Log(DialogueManager.GetInstance());
         cutscene = OpeningCutscene.GetInstance();
+        cutscene.skip_cutscene = false;
 
         cam.transform.position = new Vector3(0, 0, 0);
         mainCanvas.GetComponentInChildren<Canvas>().enabled = true;
@@ -33,14 +34,9 @@ public class newgame : MonoBehaviour
         Debug.Log(SceneManager.loadedSceneCount);
     }
 
-    public void HandleSkipCutscene()
-    {
-        Debug.Log(cutscene);
-        cutscene.skip_cutscene = !cutscene.skip_cutscene;
-    }
-
     public void SelectCharacter(bool fem)
     {
+        Player.SetGender(fem, ashley);
         StartCoroutine(HandleStartGame());
     }
 

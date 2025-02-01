@@ -11,21 +11,21 @@ public class OpeningCutscene : MonoBehaviour
 
     private void Awake()
     {
-        skip_cutscene = false;
         instance = this;
     }
 
     public void StartCutscene()
     {
-        Debug.Log(skip_cutscene);
-        if (!skip_cutscene)
-        {
-            FindObjectOfType<DialogueManager>().EnterDialogueMode(openingCutscene);
-        }
+        FindObjectOfType<DialogueManager>().EnterDialogueMode(openingCutscene);
     }
 
     public static OpeningCutscene GetInstance()
     {
         return instance;
+    }
+
+    public void SkipCutscene()
+    {
+        FindObjectOfType<DialogueManager>().ExitDialogueMode();
     }
 }
