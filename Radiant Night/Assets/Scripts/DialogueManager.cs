@@ -25,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueNameDisplay;
     [SerializeField] private Animator portraitAnimator;
     [SerializeField] private GameObject cutscenePanel;
+    [SerializeField] private GameObject player;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -50,6 +51,7 @@ public class DialogueManager : MonoBehaviour
         
         instance = this;
 
+        
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         cutscenePanel.SetActive(false);
@@ -100,6 +102,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        player.GetComponent<SpriteRenderer>().sprite = Player.model;
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);

@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public static Sprite walking_model;
     public static bool gender; //0 for male, 1 for female
 
-    public static void SetGender(bool fem, Sprite genderedModel)
+    public static void SetGender(bool fem, Sprite genderedModel, Sprite walkingModel)
     {
         if (!genderedModel)
         {
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         }
 
         model = genderedModel;
+        walking_model = walkingModel;
         gender = fem;
     }
 }

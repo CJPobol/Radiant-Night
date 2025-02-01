@@ -9,7 +9,7 @@ public class newgame : MonoBehaviour
 {
     [SerializeField] Camera cam;
     [SerializeField] Canvas mainCanvas, characterCanvas;
-    [SerializeField] Sprite ashley, ashton;
+    [SerializeField] Sprite ashley, ashton, ashley_walk;
 
     OpeningCutscene cutscene;
     
@@ -36,7 +36,7 @@ public class newgame : MonoBehaviour
 
     public void SelectCharacter(bool fem)
     {
-        Player.SetGender(fem, ashley);
+        Player.SetGender(fem, ashley, ashley_walk);
         StartCoroutine(HandleStartGame());
     }
 
