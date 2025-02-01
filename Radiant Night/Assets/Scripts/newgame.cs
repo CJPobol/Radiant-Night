@@ -2,6 +2,7 @@ using Ink.Parsed;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class newgame : MonoBehaviour
@@ -9,9 +10,16 @@ public class newgame : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] Canvas mainCanvas, characterCanvas;
     [SerializeField] Sprite ashley, ashton;
+    [SerializeField] EventSystem eventSystem;
+
+    OpeningCutscene cutscene;
+    
 
     private void Start()
     {
+        Debug.Log(DialogueManager.GetInstance());
+        cutscene = OpeningCutscene.GetInstance();
+
         cam.transform.position = new Vector3(0, 0, 0);
         mainCanvas.GetComponentInChildren<Canvas>().enabled = true;
         characterCanvas.GetComponentInChildren<Canvas>().enabled = false;
@@ -22,17 +30,22 @@ public class newgame : MonoBehaviour
         //cam.transform.position = new Vector3(-15, -15, 0);
         mainCanvas.GetComponentInChildren<Canvas>().enabled = false;
         characterCanvas.GetComponentInChildren<Canvas>().enabled = true;
+        SceneManager.LoadScene("002_Tutorial", LoadSceneMode.Additive);
+        //eventSystem.GameObject.SetActive() = false;
+        Debug.Log(SceneManager.loadedSceneCount);
+    }
 
+    public void HandleSkipCutscene()
+    {
+        Debug.Log(cutscene);
+        cutscene.skip_cutscene = !cutscene.skip_cutscene;
     }
 
     public void SelectCharacter(bool fem)
     {
-        if (fem)
-            Player.SetGender(fem, ashley);
-        else
-            Player.SetGender(fem, ashton);
-
-        SceneManager.LoadScene("002_Tutorial");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("002_Tutorial"));
+        SceneManager.UnloadSceneAsync("001_MainMenu");
+        OpeningCutscene.GetInstance().StartCutscene();
     }
 
 }

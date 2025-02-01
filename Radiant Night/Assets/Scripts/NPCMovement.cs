@@ -8,13 +8,12 @@ public class NPCMovement : MonoBehaviour
 
     [SerializeField] private GameObject[] waypoints;
     [SerializeField] private float speed;
-    public DialogueManager DialogueManager;
 
     public bool looping;
 
     private void Update()
     {
-        if (!DialogueManager.dialogueIsPlaying)
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
         {
             int i = 0;
             this.transform.position = 

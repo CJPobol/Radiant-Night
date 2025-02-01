@@ -17,13 +17,14 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        if (Player.model)
+        if (!Player.model)
         {
-            player.GetComponent<SpriteRenderer>().sprite = Player.model;
-            rb = GetComponent<Rigidbody2D>();
-            playerCollider = GetComponent<Collider2D>();
+            Player.SetGender(true, null);
         }
-        
+        player.GetComponent<SpriteRenderer>().sprite = Player.model;
+        rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
+
         isGrounded = false;
     }
 
@@ -51,9 +52,18 @@ public class Movement : MonoBehaviour
 
         //turning based on direction
         if (movingLeft)
+        {
+            GetComponent<SpriteRenderer>().sprite = Player.walking_model;
             GetComponent<SpriteRenderer>().flipX = true;
+        }
+            
         if (movingRight)
+        {
+            GetComponent<SpriteRenderer>().sprite = Player.walking_model;
             GetComponent<SpriteRenderer>().flipX = false;
+        }
+
+        GetComponent<SpriteRenderer>().sprite = Player.model;
     }
 
     void OnCollisionEnter2D(Collision2D hit)
