@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 112407159}
   - component: {fileID: 112407160}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: skip_cutscene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 296265548}
   - component: {fileID: 296265550}
   - component: {fileID: 296265549}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 373890974}
   - component: {fileID: 373890976}
   - component: {fileID: 373890975}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: nametag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 484489536}
   - component: {fileID: 484489535}
   - component: {fileID: 484489534}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ashley
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 543878953}
   - component: {fileID: 543878955}
   - component: {fileID: 543878954}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: nametag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 650545923}
   - component: {fileID: 650545925}
   - component: {fileID: 650545924}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: instructions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 918747304}
   - component: {fileID: 918747303}
   - component: {fileID: 918747302}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ashton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1123,7 +1123,7 @@ GameObject:
   - component: {fileID: 977631717}
   - component: {fileID: 977631716}
   - component: {fileID: 977631715}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: CharacterCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1228,7 +1228,7 @@ GameObject:
   - component: {fileID: 1132460027}
   - component: {fileID: 1132460026}
   - component: {fileID: 1132460025}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: newgame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1425,8 +1425,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1296962435}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.08, y: -0, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.08001709, y: 0, z: 1}
   m_LocalScale: {x: 0.94, y: 0.94, z: 0.94}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1443,7 +1443,7 @@ GameObject:
   - component: {fileID: 1323832793}
   - component: {fileID: 1323832795}
   - component: {fileID: 1323832794}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1519,7 +1519,7 @@ GameObject:
   - component: {fileID: 1751219979}
   - component: {fileID: 1751219981}
   - component: {fileID: 1751219980}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1599,7 +1599,7 @@ GameObject:
   - component: {fileID: 1822993176}
   - component: {fileID: 1822993175}
   - component: {fileID: 1822993174}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
