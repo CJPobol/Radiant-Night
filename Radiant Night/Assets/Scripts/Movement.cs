@@ -17,20 +17,25 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        if (Player.model)
+        if (!Player.model)
         {
-            player.GetComponent<SpriteRenderer>().sprite = Player.model;
-            rb = GetComponent<Rigidbody2D>();
-            playerCollider = GetComponent<Collider2D>();
+            Player.SetGender(true, null, null);
         }
-        
+        player.GetComponent<SpriteRenderer>().sprite = Player.model;
+        rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
+
         isGrounded = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying) return;
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            return;
+        }
 
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(horizontalInput, 0f);
@@ -51,9 +56,21 @@ public class Movement : MonoBehaviour
 
         //turning based on direction
         if (movingLeft)
+        {
             GetComponent<SpriteRenderer>().flipX = true;
+        }
+            
         if (movingRight)
+        {
             GetComponent<SpriteRenderer>().flipX = false;
+        }
+
+        if (GetComponent<Rigidbody2D>().velocity != Vector2.zero)
+        {
+            player.GetComponent<SpriteRenderer>().sprite = Player.walking_model;
+        }
+        else
+            player.GetComponent<SpriteRenderer>().sprite = Player.model;
     }
 
     void OnCollisionEnter2D(Collision2D hit)

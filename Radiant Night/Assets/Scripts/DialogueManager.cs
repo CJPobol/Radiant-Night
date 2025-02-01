@@ -7,6 +7,7 @@ using Unity.PlasticSCM.Editor.WebApi;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.SearchService;
+using UnityEngine.Windows;
 
 [System.Serializable]
 public class DialogueManager : MonoBehaviour
@@ -24,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueNameDisplay;
     [SerializeField] private Animator portraitAnimator;
     [SerializeField] private GameObject cutscenePanel;
+    [SerializeField] private GameObject player;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -49,6 +51,7 @@ public class DialogueManager : MonoBehaviour
         
         instance = this;
 
+        
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         cutscenePanel.SetActive(false);
@@ -71,7 +74,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (!dialogueIsPlaying) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (UnityEngine.Input.GetMouseButtonDown(0))
         {
             if (canGoNextLine)
             {
@@ -99,6 +102,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        player.GetComponent<SpriteRenderer>().sprite = Player.model;
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
@@ -145,6 +149,8 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case PORTRAIT_TAG:
                     //Debug.Log("Portrait =" + tagValue);
+                    string name = tagValue.Split('_')[0];
+                    dialogueNameDisplay.text = name[0].ToString().ToUpper() + name.Substring(1);
                     portraitAnimator.Play(tagValue);
                     break;
                 case CUTSCENE_TAG:
@@ -221,7 +227,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void ExitDialogueMode()
+    public void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);

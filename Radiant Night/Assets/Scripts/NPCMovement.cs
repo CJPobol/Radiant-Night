@@ -8,13 +8,12 @@ public class NPCMovement : MonoBehaviour
 
     [SerializeField] private GameObject[] waypoints;
     [SerializeField] private float speed;
-    public DialogueManager DialogueManager;
 
     public bool looping;
 
     private void Update()
     {
-        if (!DialogueManager.dialogueIsPlaying)
+        if (!DialogueManager.GetInstance().dialogueIsPlaying)
         {
             int i = 0;
             this.transform.position = 
@@ -30,5 +29,11 @@ public class NPCMovement : MonoBehaviour
                 i = 0;
             }
         }
+    }
+
+    void MoveToNewPoint(Vector3 coord)
+    {
+        this.transform.position =
+                Vector3.MoveTowards(this.transform.position, coord, speed);
     }
 }
