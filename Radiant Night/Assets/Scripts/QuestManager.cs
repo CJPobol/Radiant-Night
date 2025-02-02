@@ -45,6 +45,62 @@ public class QuestManager : MonoBehaviour
             questReward = "Test Reward List 4",
             questCategory = Category.World
         });
+        quests.Add(new Quest
+        {
+            questName = "Meeting the Brothers",
+            questDescription = "A stranger calling himself “Charlie” has offered to bring you back to his house. You’ve always been told to be wary of people you’ve never met, but where else could you even go?",
+            questReward = "Test Reward List 1",
+            questCategory = Category.Tutorial
+        });
+        quests.Add(new Quest
+        {
+            questName = "Search the Forest",
+            questDescription = "With odd machine-like creatures running around on Earth, you feel as though it is your duty to investigate and protect the Earthlings. To do so, you’ll need to find more of them in the forest you landed in.",
+            questReward = "Test Reward List 2",
+            questCategory = Category.Story
+        });
+        quests.Add(new Quest
+        {
+            questName = "College Day",
+            questDescription = "Jacke has offered to take you along with them to college for a day. A bit of socialization might do you some good, maybe you should take them up on it! ",
+            questReward = "Test Reward List 3",
+            questCategory = Category.Character
+        });
+        quests.Add(new Quest
+        {
+            questName = "Robot Extermination",
+            questDescription = "Test Description 4",
+            questReward = "Test Reward List 4",
+            questCategory = Category.World
+        });
+        quests.Add(new Quest
+        {
+            questName = "Meeting the Brothers",
+            questDescription = "A stranger calling himself “Charlie” has offered to bring you back to his house. You’ve always been told to be wary of people you’ve never met, but where else could you even go?",
+            questReward = "Test Reward List 1",
+            questCategory = Category.Tutorial
+        });
+        quests.Add(new Quest
+        {
+            questName = "Search the Forest",
+            questDescription = "With odd machine-like creatures running around on Earth, you feel as though it is your duty to investigate and protect the Earthlings. To do so, you’ll need to find more of them in the forest you landed in.",
+            questReward = "Test Reward List 2",
+            questCategory = Category.Story
+        });
+        quests.Add(new Quest
+        {
+            questName = "College Day",
+            questDescription = "Jacke has offered to take you along with them to college for a day. A bit of socialization might do you some good, maybe you should take them up on it! ",
+            questReward = "Test Reward List 3",
+            questCategory = Category.Character
+        });
+        quests.Add(new Quest
+        {
+            questName = "Robot Extermination",
+            questDescription = "Test Description 4",
+            questReward = "Test Reward List 4",
+            questCategory = Category.World
+        });
         PopulateQuestList();
     }
 
