@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        if (DialogueManager.GetInstance().dialogueIsPlaying || QuestManager.GetInstance().questSystem.gameObject.activeSelf)
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             return;
