@@ -7,6 +7,8 @@ The game is a turn based RPG in which the player is able to use the unique fight
 The game currently has a functioning dialogue system which will be heavily utilized throughout the game as it is very story oriented. 
 ![image](https://github.com/user-attachments/assets/162d70a9-846e-4e08-8681-e77cfe47e467)
 
+A quest system is also implemented, showing the player all of the active quests they can currently complete. This is not throughly used yet but it is ready when the time comes.
+![image](https://github.com/user-attachments/assets/14f47cdf-2107-4b84-aba7-db1fae49934a)
 
 The combat system is currently in early development, with two character kits in the works.
 ![image](https://github.com/user-attachments/assets/3e026318-fcbf-4483-8851-4fd39d34e3b7)
