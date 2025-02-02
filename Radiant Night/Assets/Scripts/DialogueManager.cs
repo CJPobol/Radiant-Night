@@ -178,7 +178,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeOut(CanvasGroup rend)
+    public IEnumerator FadeOut(CanvasGroup rend)
     {
         for (float f = 1; f > -0.02f; f -= 0.02f)
         {
