@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Category { Story, Character, World, Tutorial }
+
+// category "ALL" is not for use in game, but only used for quest filtering in the journal.
+public enum Category { ALL, Story, Character, World, Tutorial }
 
 
 [System.Serializable]
