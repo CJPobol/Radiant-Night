@@ -12,6 +12,7 @@ public class QuestManager : MonoBehaviour
     public Transform questContainer;
     public GameObject questItemPrefab;
     public GameObject popup;
+    public TextMeshProUGUI questGuide;
 
     public GameObject questSystem;
 
@@ -33,6 +34,7 @@ public class QuestManager : MonoBehaviour
         {
             questName = "Meeting the Brothers",
             questDescription = "A stranger calling himself “Charlie” has offered to bring you back to his house. You’ve always been told to be wary of people you’ve never met, but where else could you even go?",
+            questGuide = "Follow Charlie to his house.",
             questReward = "Test Reward List 1",
             questCategory = Category.Tutorial
         });
@@ -75,13 +77,16 @@ public class QuestManager : MonoBehaviour
     {
         if (activeQuest != null)
         {
+            activeQuest.activeQuest = false;
             activeQuest = null;
         }
 
         if (showingQuest != null)
         {
             activeQuest = showingQuest;
+            activeQuest.activeQuest = true;
         }
+        questGuide.text = activeQuest.questGuide;
         Debug.Log(activeQuest.questName);
     }
 
