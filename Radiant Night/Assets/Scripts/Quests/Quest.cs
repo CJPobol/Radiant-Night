@@ -14,4 +14,5 @@ public class Quest
     public string questDescription;
     public string questReward; //TODO: this should be something better than a string at some point
     public Category questCategory;
+    public bool activeQuest;
 }

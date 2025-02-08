@@ -16,6 +16,7 @@ public class QuestManager : MonoBehaviour
     public GameObject questSystem;
 
     private List<Quest> quests = new List<Quest>();
+    private Quest showingQuest, activeQuest;
 
 
     private static QuestManager instance;
@@ -70,7 +71,19 @@ public class QuestManager : MonoBehaviour
         return instance;
     }
 
-    
+    public void SetActiveQuest()
+    {
+        if (activeQuest != null)
+        {
+            activeQuest = null;
+        }
+
+        if (showingQuest != null)
+        {
+            activeQuest = showingQuest;
+        }
+        Debug.Log(activeQuest.questName);
+    }
 
     public void AddQuest(Quest quest)
     {
@@ -96,6 +109,7 @@ public class QuestManager : MonoBehaviour
 
     public void ShowQuestDetails(Quest quest)
     {
+        showingQuest = quest;
         descriptionText.text = quest.questDescription;
         rewardText.text = quest.questReward;
     }
