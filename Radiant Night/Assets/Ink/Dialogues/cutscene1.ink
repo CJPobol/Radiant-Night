@@ -158,3 +158,4 @@ Today’s not the day to be sleeping in the middle of the woods. I don't know if
 -  I don’t want to leave you alone in a rainy forest though, so why don’t you come back to my house to wait out the storm? It’s not far from here, I’ll lead the way! #portrait:charlie_happy
 
 -> END
+#quest_add:Q001

@@ -1,0 +1,45 @@
+{
+    "quests": [
+        {
+            "questCode": "Q001",
+            "questName": "Meeting the Brothers",
+            "questDescription": "A stranger calling himself “Charlie” has offered to bring you back to his house. You’ve always been told to be wary of people you’ve never met, but where else could you even go?",
+            "category": "Tutorial",
+            "questRewards": "",
+            "questGuide": [
+                "Follow Charlie to his house.",
+                "Talk to Jacke.",
+                "Have dinner with the brothers.",
+                "Get to the shelter."
+            ]
+        },
+
+        {
+            "questCode": "Q002",
+            "questName": "Strange Creatures",
+            "questDescription": "A strange creature unlike anything you’ve seen before just attacked you and some innocent Earthlings. You must investigate further, to discover what they are and the potential danger of them roaming the Earth.",
+            "category": "Story",
+            "questRewards": "",
+            "questGuide": [
+                "Return to Jacke.",
+                "Sleep through the night.",
+                "Decide which brother to take with you.",
+                "Head into town.",
+                "Gather information on the creatures.",
+                "Head to the shopkeeper's ranch"
+            ]
+        },
+
+        {
+            "questCode": "Q003",
+            "questName": "Search the Forest",
+            "questDescription": "With odd machine-like creatures running around on Earth, you feel as though it is your duty to investigate and protect the Earthlings. To do so, you’ll need to find more of them in the forest you landed in.",
+            "category": "Story",
+            "questRewards": "",
+            "questGuide": [
+
+            ]
+        }
+    ]
+
+}

@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class QuestManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class QuestManager : MonoBehaviour
 
     public GameObject questSystem;
 
-    private List<Quest> quests = new List<Quest>();
+    private Dictionary<string, Quest> quests = new Dictionary<string, Quest>();
     private Quest showingQuest, activeQuest;
 
 
@@ -30,7 +31,7 @@ public class QuestManager : MonoBehaviour
         instance = this;
         questSystem.SetActive(false);
 
-        AddQuest(new Quest
+        /*AddQuest(new Quest
         {
             questName = "Meeting the Brothers",
             questDescription = "A stranger calling himself “Charlie” has offered to bring you back to his house. You’ve always been told to be wary of people you’ve never met, but where else could you even go?",
@@ -55,11 +56,35 @@ public class QuestManager : MonoBehaviour
         AddQuest(new Quest
         {
             questName = "Robot Extermination",
-            questDescription = "A local shopkeeper has requested that you defend his ranch from the mosnters roaming Earth. He offered a hefty reward for each time you fend off the beasts.",
+            questDescription = "A local shopkeeper has requested that you defend his ranch from the monsters roaming Earth. He offered a hefty reward for each time you fend off the beasts.",
             questReward = "Test Reward List 4",
             questCategory = Category.World
         });
-        
+        */
+        LoadQuests();
+    }
+
+    private void LoadQuests()
+    {
+        // Load JSON file from Resources
+        TextAsset jsonFile = Resources.Load<TextAsset>("QuestList");
+        if (jsonFile == null)
+        {
+            Debug.LogError("Quest JSON file not found!");
+            return;
+        }
+
+        // Deserialize JSON into QuestDatabase
+        QuestDatabase questDatabase = JsonUtility.FromJson<QuestDatabase>(jsonFile.text);
+
+        // Convert List to Dictionary for fast lookups
+        foreach (Quest quest in questDatabase.quests)
+        {
+            quest.ParseCategory();
+            quests[quest.questCode] = quest;
+        }
+
+        Debug.Log("Quests Loaded: " + quests.Count);
     }
 
     private void Update()
@@ -87,17 +112,41 @@ public class QuestManager : MonoBehaviour
             activeQuest.activeQuest = true;
         }
         questGuide.text = activeQuest.questGuide;
-        Debug.Log(activeQuest.questName);
+        Debug.Log(activeQuest.questGuide);
     }
 
     public void AddQuest(Quest quest)
     {
-        quests.Add(quest);
         GameObject questItem = Instantiate(questItemPrefab, questContainer);
         questItem.GetComponentInChildren<TextMeshProUGUI>().text = quest.questName;
         questItem.GetComponent<QuestTypeDisplay>().category = quest.questCategory;
         questItem.GetComponent<Button>().onClick.AddListener(() => ShowQuestDetails(quest));
         StartCoroutine(MakePopup());
+    }
+
+    public void AddQuest(string QuestCode)
+    {
+        Quest foundQuest = null;
+
+        foreach (Quest quest in quests.Values)
+        {
+            if (quest.questCode == QuestCode)
+            {
+                foundQuest = quest;
+                break;  // Stop searching after finding the first match
+            }
+        }
+
+        if (foundQuest != null)
+        {
+            Debug.Log("Found quest: " + foundQuest.questName);
+            AddQuest(foundQuest);
+        }
+        else
+        {
+            Debug.Log("Quest not found!");
+        }
+        
     }
 
     public IEnumerator MakePopup()
@@ -125,7 +174,7 @@ public class QuestManager : MonoBehaviour
     {
         foreach (Transform child in questContainer)
         {
-            Quest quest = quests.Find(q => q.questName == child.GetComponentInChildren<TextMeshProUGUI>().text);
+            Quest quest = quests.Values.FirstOrDefault(q => q.questName == child.GetComponentInChildren<TextMeshProUGUI>().text);
             if (selectedCategory == Category.ALL)
                 child.gameObject.SetActive(true);
             else
