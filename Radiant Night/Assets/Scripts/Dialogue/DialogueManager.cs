@@ -36,6 +36,7 @@ public class DialogueManager : MonoBehaviour
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAIT_TAG = "portrait";
     private const string CUTSCENE_TAG = "cutscene";
+    private const string QUEST_ADD_TAG = "quest_add";
 
     public bool dialogueIsPlaying { get; private set; }
     private bool canGoNextLine;
@@ -170,6 +171,9 @@ public class DialogueManager : MonoBehaviour
                             Debug.LogError("Cutscene tag not recognized: " + tagValue);
                             break;
                     }
+                    break;
+                case QUEST_ADD_TAG:
+                    QuestManager.GetInstance().AddQuest(tagValue);
                     break;
                 default:
                     Debug.LogError("Tag is not currently being handled: " + tag);
