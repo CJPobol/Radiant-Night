@@ -11,13 +11,13 @@ public class newgame : MonoBehaviour
     [SerializeField] Canvas mainCanvas, characterCanvas;
     [SerializeField] Sprite ashley, ashton, ashley_walk;
 
-    OpeningCutscene cutscene;
+    Cutscene cutscene;
     
 
     private void Start()
     {
         Debug.Log(DialogueManager.GetInstance());
-        cutscene = OpeningCutscene.GetInstance();
+        cutscene = Cutscene.GetInstance();
         cutscene.skip_cutscene = false;
 
         cam.transform.position = new Vector3(0, 0, 0);
@@ -46,6 +46,6 @@ public class newgame : MonoBehaviour
         yield return new WaitUntil(() => SceneManager.loadedSceneCount == 2);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("002_Tutorial"));
         SceneManager.UnloadSceneAsync("001_MainMenu");
-        OpeningCutscene.GetInstance().StartCutscene();
+        Cutscene.GetInstance().StartCutscene();
     }
 }

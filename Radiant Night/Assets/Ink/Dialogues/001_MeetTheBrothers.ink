@@ -1,6 +1,7 @@
 CONST playerName = "Ashley"
 VAR CharlieFriendship = 0
 VAR NatalieFriendship = 0
+VAR JackeFriendship = 0
 
 #cutscene:on
 
@@ -32,9 +33,6 @@ That’s sick… Please, you can’t do this to me. I didn’t do anything wrong
 
 We both know that’s not true. I’m sorry, but I’m just doing my job. #speaker:Natalie #portrait:natalie_annoyed
 
--> choice1
-
-=== choice1 ===
 Now seriously, you need to stop tensing up this much… #speaker:Natalie
 
     * Yeah, right. You try relaxing while someone’s trying to rip your chip out. #speaker:{playerName} #portrait:ashley_angry
@@ -105,7 +103,7 @@ Earth to stranger! Are you okay?... #speaker:Charlie #portrait:charlie_worried
 
 -> CharlieIntro
 
-=== CharlieIntro ===
+= CharlieIntro
 
     * Who are you? #speaker:{playerName} #portrait:ashley_neutral
  
@@ -138,7 +136,7 @@ Today’s not the day to be sleeping in the middle of the woods. I don't know if
 
 -> home
 
-=== home ===
+= home
 
     * I don’t have a home I can go back to. #speaker:{playerName} #portrait:ashley_sad
         
@@ -158,3 +156,93 @@ Today’s not the day to be sleeping in the middle of the woods. I don't know if
 -  I don’t want to leave you alone in a rainy forest though, so why don’t you come back to my house to wait out the storm? It’s not far from here, I’ll lead the way! #portrait:charlie_happy #quest_add:Q001
 
 -> END
+
+=== WELCOME ===
+
+Alright, we're here! Come on in! #speaker:Charlie #portrait:charlie_cheery
+
+Charlie! #speaker: Jacke #portrait:jacke_cheery
+
+You’re back before the rain even started, that’s so unlike you. Who’s this? #portrait:jacke_neutral
+
+This is {playerName}, I met her out in the forest. She needs a spot to crash and wait out the storm. #speaker: Charlie #portrait:charlie_happy
+
+{playerName}, this is my brother.
+
+Name’s Jacke, nice to meet ya! #speaker: Jacke #portrait: jacke_cheery
+
+    * Wow, you're really cool! #speaker: Ashley #portrait: ashley_neutral
+        ~ JackeFriendship += 10
+        
+        Hahaha, thanks dude. You're not too bad yourself. #speaker: Jacke #portrait: jacke_cheery
+        
+    * Nice to meet you too. #speaker: Ashley #portrait: ashley_happy
+    
+    * Thank you for letting me stay here. #speaker: Ashley #portrait: ashley_neutral
+        ~ JackeFriendship -= 5
+        
+        You seem shy, I promise I don’t bite. You don’t have to be all formal about thanking us, you know? It’s whatever. #speaker: Jacke #portrait: jacke_happy
+
+- Well, I’m gonna go get dinner started. I’ll let you guys chat and get you when we’re ready to eat. #speaker: Charlie #portrait:charlie_happy
+
+-> END
+
+=== JackeTalk ===
+Hey, I’ve never been one for boring conversations. What do you say we play video games instead? Kill some time before dinner? #speaker: Jacke #portrait: jacke_neutral
+    
+    * Sure, sounds like fun! But you’d have to teach me how. #speaker: Ashley #portrait: ashley_happy
+        ~ JackeFriendship += 10
+        
+        Alright! That’s what I’m talking about! #speaker: Jacke #portrait: jacke_cheery
+        -> DinnerTime
+        
+    * Think we could talk a bit first? #speaker: Ashley #portrait:ashley_neutral
+        ~ JackeFriendship -= 10
+        Sure, go for it. #speaker: Jacke #portrait: jacke_neutral
+        -> JackeTalk2
+        
+= JackeTalk2
+    * Is it just you and Charlie that live here? #speaker: Ashley #portrait:ashley_neutral
+        ~ JackeFriendship -= 20
+        
+        I don't see how that's any of your business. #speaker: Jacke #portrait:jacke_angry
+        ->JackeTalk2
+        
+    * You should know where I’m from. #speaker: Ashley #portrait:ashley_sad
+        
+        Hey, it’s not my place to pry into your personal life. If you really wanna tell me then go for it, but you don’t have to. #speaker: Jacke #portrait: jacke_neutral
+        
+        **[Tell them] I’m from another planet, but I’m in pretty big trouble. I was exiled here earlier today, and your brother found me in the woods. #speaker: Ashley #portrait:ashley_sad
+            ~ JackeFriendship += 10
+            
+            So... you’re an alien? #speaker: Jacke #portrait:jacke_shock
+            
+            Hahaha, I didn’t know you had such a sense of humor. Maybe you’re not so bad after all. #portrait:jacke_cheery
+            
+            ->JackeTalk2
+        
+        **[Don't tell them] ... #speaker: Ashley #portrait:ashley_sad
+            ->JackeTalk2
+    
+    * Do you like it here? #speaker: Ashley #portrait:ashley_neutral
+        ~ JackeFriendship += 5
+        
+        What, in Ember City? It’s fine I guess. City living isn’t that bad when you live on the outskirts of town like Charlie and I do. #speaker: Jacke #portrait:jacke_neutral
+        ->JackeTalk2    
+        
+    * How about we play that game now? #speaker: Ashley #portrait:ashley_happy
+        ~ JackeFriendship += 5
+        
+        You'll have to teach me how though! #portrait:ashley_cheery
+        
+        Oh, a woman after my own heart! You are SO on! #speaker: Jacke #portrait:jacke_happy
+        ->DinnerTime
+        
+
+= DinnerTime
+        
+- Hey guys, I’ve got dinner ready! #speaker: Charlie #portrait:charlie_happy
+
+-> END
+
+

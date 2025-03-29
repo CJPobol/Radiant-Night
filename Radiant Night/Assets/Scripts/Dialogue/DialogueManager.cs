@@ -101,10 +101,16 @@ public class DialogueManager : MonoBehaviour
         return instance;
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON, String knot = "")
     {
+        //locks idle model
         player.GetComponent<SpriteRenderer>().sprite = Player.model;
         currentStory = new Story(inkJSON.text);
+        if (knot != "")
+        {
+            currentStory.ChoosePathString(knot);
+        }
+            
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         Debug.Log("Dialogue Panel set to active");

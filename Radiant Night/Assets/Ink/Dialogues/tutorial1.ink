@@ -1,9 +1,9 @@
 CONST playerName = "Ashley"
 VAR JackeFriendship = 0
 
--> START
+-> WELCOME
 
-=== START ===
+=== WELCOME ===
 
 Alright, we're here! Come on in! #speaker:Charlie #portrait:charlie_cheery
 
@@ -15,9 +15,6 @@ This is {playerName}, I met her out in the forest. She needs a spot to crash and
 
 {playerName}, this is my brother.
 
--> introChoice
-
-=== introChoice ===
 Name’s Jacke, nice to meet ya! #speaker: Jacke #portrait: jacke_cheery
 
     * Wow, you're really cool! #speaker: Ashley #portrait: ashley_neutral

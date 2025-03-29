@@ -2783,7 +2783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9ba17f404b3a243b4d174ee9fcb202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openingCutscene: {fileID: 4900000, guid: 4c28d1225a69aa64ab8b93c19b223693, type: 3}
+  inkfile: {fileID: 4900000, guid: 0066afaa75465394b81e8adedc61ad46, type: 3}
   skip_cutscene: 0
 --- !u!1 &381899269
 GameObject:
@@ -4217,7 +4217,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1293616613}
-  inkJSON: {fileID: 4900000, guid: 361ae7e5157890242a589d74fe2a888c, type: 3}
+  inkJSON: {fileID: 4900000, guid: 0066afaa75465394b81e8adedc61ad46, type: 3}
+  knot: JackeTalk
   forceTrigger: 0
 --- !u!70 &577185144
 CapsuleCollider2D:
@@ -6662,7 +6663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1293616613}
-  inkJSON: {fileID: 4900000, guid: 0f6e9af8203415a4ea4ad08212408d34, type: 3}
+  inkJSON: {fileID: 4900000, guid: 0066afaa75465394b81e8adedc61ad46, type: 3}
+  knot: WELCOME
   forceTrigger: 1
 --- !u!114 &892011409
 MonoBehaviour:
@@ -10295,6 +10297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1293616613}
   inkJSON: {fileID: 4900000, guid: c60efdfc0cb2e124b8ff157b70164dd2, type: 3}
+  knot: 
   forceTrigger: 1
 --- !u!61 &1501128118
 BoxCollider2D:
