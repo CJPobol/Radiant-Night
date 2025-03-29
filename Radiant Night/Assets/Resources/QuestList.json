@@ -39,6 +39,17 @@
             "questGuide": [
 
             ]
+        },
+
+        {
+            "questCode": "Q004",
+            "questName": "Robot Extermination",
+            "questDescription": "A local shopkeeper has requested that you defend his ranch from the monsters roaming Earth. He offered a hefty reward for each time you fend off the beasts.",
+            "category": "World",
+            "questReward": "",
+            "questGuide": [
+
+            ]
         }
     ]
 
