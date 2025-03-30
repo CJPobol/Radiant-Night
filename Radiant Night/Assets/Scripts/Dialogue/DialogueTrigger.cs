@@ -1,3 +1,5 @@
+using Ink.Parsed;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +11,13 @@ public class DialogueTrigger : MonoBehaviour
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private String knot;
 
     private bool playerInRange;
 
     public bool forceTrigger;
+    [SerializeField] private bool starter;
+
 
     private void Awake()
     {
@@ -28,7 +33,7 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(true);
             if (Input.GetButtonDown("interact") || forceTrigger)
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, starter, knot);
                 forceTrigger = false;
             }
         }

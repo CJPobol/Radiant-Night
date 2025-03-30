@@ -20,20 +20,33 @@ public class SceneTrigger : MonoBehaviour
     public GameObject visualCue;
     
     private bool playerInRange;
+    private bool locked;
 
     private void Start()
     {
         playerInRange = false;
+
+        if (this.GetComponent<LockedArea>() == null)
+        {
+            locked = false;
+        }
+        else
+            locked = true;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("interact"))
+        if (Input.GetButtonDown("interact") && playerInRange)
         {
-            if (playerInRange)
+            //if the area is not restricted OR it is restricted but has been unlocked.
+            if (locked == false || (locked && this.GetComponent<LockedArea>().isUnlocked))
             {
                 MoveCharacter();
                 forceTrigger = false;
+            }
+            else
+            {
+                Debug.Log("This area is locked.");
             }
         }
     }

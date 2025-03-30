@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpeningCutscene : MonoBehaviour
+public class Cutscene : MonoBehaviour
 {
-    [SerializeField] private TextAsset openingCutscene;
+    [SerializeField] private TextAsset inkfile;
     public bool skip_cutscene;
-    static OpeningCutscene instance;
+    static Cutscene instance;
 
     private void Awake()
     {
@@ -16,10 +16,11 @@ public class OpeningCutscene : MonoBehaviour
 
     public void StartCutscene()
     {
-        FindObjectOfType<DialogueManager>().EnterDialogueMode(openingCutscene);
+        //THIS IS HARD CODED AS A QUEST STARTER AT THE MOMENT
+        FindObjectOfType<DialogueManager>().EnterDialogueMode(inkfile, true);
     }
 
-    public static OpeningCutscene GetInstance()
+    public static Cutscene GetInstance()
     {
         return instance;
     }

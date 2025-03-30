@@ -30,13 +30,19 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choiceText;
-    
+
+    //list of npcs in scene that can be referenced by tags.
+    NPCMovement[] npcs;
+
     private Story currentStory;
 
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAIT_TAG = "portrait";
     private const string CUTSCENE_TAG = "cutscene";
     private const string QUEST_ADD_TAG = "quest_add";
+    private const string UNLOCK_TAG = "unlock_area";
+    private const string WAYPOINT_TAG = "next_waypoint";
+    private const string FOLLOW_TAG = "follower";
 
     public bool dialogueIsPlaying { get; private set; }
     private bool canGoNextLine;
@@ -69,6 +75,8 @@ public class DialogueManager : MonoBehaviour
             choiceText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
         }
+
+        
     }
 
     private void Update()
@@ -101,15 +109,40 @@ public class DialogueManager : MonoBehaviour
         return instance;
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    //changing quests, new ink file.
+    public void EnterNEWStory(TextAsset inkJSON, String knot = "")
     {
+        
+        if (knot != "")
+        {
+            currentStory.ChoosePathString(knot);
+        }
+    }
+
+    //new knots within the same quest you've been doing.
+    public void EnterDialogueMode(TextAsset inkJSON, bool newStory, String knot = "")
+    {
+        //list of npcs in scene that can be referenced by tags.
+        npcs = FindObjectsOfType<NPCMovement>();
+
+        //locks idle model
         player.GetComponent<SpriteRenderer>().sprite = Player.model;
-        currentStory = new Story(inkJSON.text);
+        if (newStory)
+        {
+            currentStory = new Story(inkJSON.text);
+        }
+        if (knot != "")
+        {
+            currentStory.ChoosePathString(knot);
+        }
+
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         Debug.Log("Dialogue Panel set to active");
 
         ContinueStory();
+
+        
     }
 
     private void ContinueStory()
@@ -120,6 +153,7 @@ public class DialogueManager : MonoBehaviour
             
             //display dialogue line
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+            Debug.Log(currentStory.variablesState["dinnerready"]);
             
             HandleTags(currentStory.currentTags);
         }
@@ -174,6 +208,36 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case QUEST_ADD_TAG:
                     QuestManager.GetInstance().AddQuest(tagValue);
+                    break;
+                case UNLOCK_TAG:
+                    LockedArea[] areas = FindObjectsOfType<LockedArea>();
+                    foreach (LockedArea area in areas)
+                    { 
+                        if (area.areaName == tagValue)
+                        {
+                            area.isUnlocked = true;
+                        }
+                    }
+                    break;
+                case WAYPOINT_TAG:
+                    foreach (NPCMovement npc in npcs)
+                    {
+                        if (npc.NPCName == tagValue)
+                        {
+                            npc.StopWaiting();
+                        }
+                    }
+
+                    break;
+                case FOLLOW_TAG:              
+                    foreach (NPCMovement npc in npcs)
+                    {
+                        if (npc.NPCName == tagValue)
+                        {
+                            npc.following = true;
+                            npc.StopWaiting();
+                        }
+                    }
                     break;
                 default:
                     Debug.LogError("Tag is not currently being handled: " + tag);
