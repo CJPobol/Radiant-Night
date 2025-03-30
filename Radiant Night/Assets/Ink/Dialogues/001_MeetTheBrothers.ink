@@ -302,15 +302,17 @@ Just get out, please… #speaker:Charlie
 #unlock_area:woods
 
 -> END
-}
+
 
 === WAIT ===
 
-Hey! Wait up! #speaker:Charlie
-
 #next_waypoint:Charlie
 
+Hey! Wait up! #speaker:Charlie
+
 I’m sorry, that was rude of me to kick you out so fast… I’ll help you get to the shelter.
+
+#follower:Charlie
 
 -> END
 

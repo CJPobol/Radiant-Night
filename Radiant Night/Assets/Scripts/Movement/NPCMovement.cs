@@ -14,7 +14,8 @@ public class NPCMovement : MonoBehaviour
     public bool isWaiting;
 
     public bool stepBased; //allows for moving here, something happens, then moving there.
-    public bool looping; //allows for repeating movement patterns
+    public bool looping; //allows for repeating movement patterns.
+    public bool following; //allows for NPCs to follow the player's movement.
 
     void Start()
     {
@@ -31,13 +32,49 @@ public class NPCMovement : MonoBehaviour
 
         if (!stepBased)
         {
-            StartCoroutine(MoveAlongWaypoints());  // Start movement immediately if not step-based
+            StartMoving();  // Start movement immediately if not step-based
         }
     }
 
     public void StartMoving()
     {
-        StartCoroutine(MoveAlongWaypoints());
+        if (following)
+        {
+            StartCoroutine(FollowPlayer());
+        }
+        else
+        {
+            StartCoroutine(MoveAlongWaypoints());
+        }
+        
+    }
+
+    private IEnumerator FollowPlayer()
+    {
+        Player player = FindObjectOfType<Player>(); // Cache reference to player
+        if (player == null) yield break; // Safety check
+
+        while (true) // Keep following the player
+        {
+            Vector3 targetPosition = player.transform.position - new Vector3(2, 0, 0);
+            Vector3 startPosition = transform.position;
+            float journeyLength = Vector3.Distance(startPosition, targetPosition);
+            float journeyTime = journeyLength / speed;
+            float elapsedTime = 0f;            
+
+            while (elapsedTime < journeyTime)
+            {
+                targetPosition = player.transform.position - new Vector3(2, 0, 0); // Continuously update target position
+                transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / journeyTime);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+
+            //transform.position = player.transform.position - new Vector3(2, 0, 0); // Snap to exact position
+
+            yield return null; // Prevents an infinite loop crash
+        }
     }
 
     private IEnumerator MoveAlongWaypoints()
@@ -86,8 +123,8 @@ public class NPCMovement : MonoBehaviour
     public void StopWaiting()
     {
         isWaiting = false;
-        StopCoroutine(MoveAlongWaypoints());
-        StartCoroutine(MoveAlongWaypoints());
+        //StopCoroutine(MoveAlongWaypoints());
+        StartMoving();
     }
 
 }

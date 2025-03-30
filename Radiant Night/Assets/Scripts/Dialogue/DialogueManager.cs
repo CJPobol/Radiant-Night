@@ -30,7 +30,10 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choiceText;
-    
+
+    //list of npcs in scene that can be referenced by tags.
+    NPCMovement[] npcs;
+
     private Story currentStory;
 
     private const string SPEAKER_TAG = "speaker";
@@ -39,6 +42,7 @@ public class DialogueManager : MonoBehaviour
     private const string QUEST_ADD_TAG = "quest_add";
     private const string UNLOCK_TAG = "unlock_area";
     private const string WAYPOINT_TAG = "next_waypoint";
+    private const string FOLLOW_TAG = "follower";
 
     public bool dialogueIsPlaying { get; private set; }
     private bool canGoNextLine;
@@ -71,6 +75,8 @@ public class DialogueManager : MonoBehaviour
             choiceText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
         }
+
+        
     }
 
     private void Update()
@@ -116,6 +122,9 @@ public class DialogueManager : MonoBehaviour
     //new knots within the same quest you've been doing.
     public void EnterDialogueMode(TextAsset inkJSON, bool newStory, String knot = "")
     {
+        //list of npcs in scene that can be referenced by tags.
+        npcs = FindObjectsOfType<NPCMovement>();
+
         //locks idle model
         player.GetComponent<SpriteRenderer>().sprite = Player.model;
         if (newStory)
@@ -132,6 +141,8 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("Dialogue Panel set to active");
 
         ContinueStory();
+
+        
     }
 
     private void ContinueStory()
@@ -209,8 +220,6 @@ public class DialogueManager : MonoBehaviour
                     }
                     break;
                 case WAYPOINT_TAG:
-                    NPCMovement[] npcs = FindObjectsOfType<NPCMovement>();
-                    
                     foreach (NPCMovement npc in npcs)
                     {
                         if (npc.NPCName == tagValue)
@@ -219,6 +228,16 @@ public class DialogueManager : MonoBehaviour
                         }
                     }
 
+                    break;
+                case FOLLOW_TAG:              
+                    foreach (NPCMovement npc in npcs)
+                    {
+                        if (npc.NPCName == tagValue)
+                        {
+                            npc.following = true;
+                            npc.StopWaiting();
+                        }
+                    }
                     break;
                 default:
                     Debug.LogError("Tag is not currently being handled: " + tag);
