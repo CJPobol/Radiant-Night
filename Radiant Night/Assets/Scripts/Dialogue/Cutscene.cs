@@ -16,7 +16,8 @@ public class Cutscene : MonoBehaviour
 
     public void StartCutscene()
     {
-        FindObjectOfType<DialogueManager>().EnterDialogueMode(inkfile);
+        //THIS IS HARD CODED AS A QUEST STARTER AT THE MOMENT
+        FindObjectOfType<DialogueManager>().EnterDialogueMode(inkfile, true);
     }
 
     public static Cutscene GetInstance()

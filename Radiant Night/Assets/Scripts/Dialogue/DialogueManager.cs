@@ -37,6 +37,8 @@ public class DialogueManager : MonoBehaviour
     private const string PORTRAIT_TAG = "portrait";
     private const string CUTSCENE_TAG = "cutscene";
     private const string QUEST_ADD_TAG = "quest_add";
+    private const string UNLOCK_TAG = "unlock_area";
+    private const string WAYPOINT_TAG = "next_waypoint";
 
     public bool dialogueIsPlaying { get; private set; }
     private bool canGoNextLine;
@@ -101,16 +103,30 @@ public class DialogueManager : MonoBehaviour
         return instance;
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON, String knot = "")
+    //changing quests, new ink file.
+    public void EnterNEWStory(TextAsset inkJSON, String knot = "")
     {
-        //locks idle model
-        player.GetComponent<SpriteRenderer>().sprite = Player.model;
-        currentStory = new Story(inkJSON.text);
+        
         if (knot != "")
         {
             currentStory.ChoosePathString(knot);
         }
-            
+    }
+
+    //new knots within the same quest you've been doing.
+    public void EnterDialogueMode(TextAsset inkJSON, bool newStory, String knot = "")
+    {
+        //locks idle model
+        player.GetComponent<SpriteRenderer>().sprite = Player.model;
+        if (newStory)
+        {
+            currentStory = new Story(inkJSON.text);
+        }
+        if (knot != "")
+        {
+            currentStory.ChoosePathString(knot);
+        }
+
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         Debug.Log("Dialogue Panel set to active");
@@ -126,6 +142,7 @@ public class DialogueManager : MonoBehaviour
             
             //display dialogue line
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+            Debug.Log(currentStory.variablesState["dinnerready"]);
             
             HandleTags(currentStory.currentTags);
         }
@@ -180,6 +197,28 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case QUEST_ADD_TAG:
                     QuestManager.GetInstance().AddQuest(tagValue);
+                    break;
+                case UNLOCK_TAG:
+                    LockedArea[] areas = FindObjectsOfType<LockedArea>();
+                    foreach (LockedArea area in areas)
+                    { 
+                        if (area.areaName == tagValue)
+                        {
+                            area.isUnlocked = true;
+                        }
+                    }
+                    break;
+                case WAYPOINT_TAG:
+                    NPCMovement[] npcs = FindObjectsOfType<NPCMovement>();
+                    
+                    foreach (NPCMovement npc in npcs)
+                    {
+                        if (npc.NPCName == tagValue)
+                        {
+                            npc.StopWaiting();
+                        }
+                    }
+
                     break;
                 default:
                     Debug.LogError("Tag is not currently being handled: " + tag);

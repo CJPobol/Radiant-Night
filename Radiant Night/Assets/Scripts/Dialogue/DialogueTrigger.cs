@@ -16,6 +16,8 @@ public class DialogueTrigger : MonoBehaviour
     private bool playerInRange;
 
     public bool forceTrigger;
+    private bool starter;
+
 
     private void Awake()
     {
@@ -31,7 +33,8 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(true);
             if (Input.GetButtonDown("interact") || forceTrigger)
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, knot);
+
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, starter, knot);
                 forceTrigger = false;
             }
         }

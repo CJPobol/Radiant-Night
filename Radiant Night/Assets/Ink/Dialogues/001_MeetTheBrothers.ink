@@ -3,6 +3,8 @@ VAR CharlieFriendship = 0
 VAR NatalieFriendship = 0
 VAR JackeFriendship = 0
 
+VAR dinnerready = false
+
 #cutscene:on
 
 -> START
@@ -153,7 +155,7 @@ Today’s not the day to be sleeping in the middle of the woods. I don't know if
         You caught me! Maybe it makes me a little strange, but I love walking in the rain. Something about it really helps me calm down. #speaker:Charlie #portrait:charlie_cheery
         -> home
 
--  I don’t want to leave you alone in a rainy forest though, so why don’t you come back to my house to wait out the storm? It’s not far from here, I’ll lead the way! #portrait:charlie_happy #quest_add:Q001
+-  I don’t want to leave you alone in a rainy forest though, so why don’t you come back to my house to wait out the storm? It’s not far from here, I’ll lead the way! #portrait:charlie_happy #next_waypoint:Charlie #quest_add:Q001
 
 -> END
 
@@ -162,6 +164,8 @@ Today’s not the day to be sleeping in the middle of the woods. I don't know if
 Alright, we're here! Come on in! #speaker:Charlie #portrait:charlie_cheery
 
 Charlie! #speaker: Jacke #portrait:jacke_cheery
+
+#next_waypoint:Jacke
 
 You’re back before the rain even started, that’s so unlike you. Who’s this? #portrait:jacke_neutral
 
@@ -183,7 +187,10 @@ Name’s Jacke, nice to meet ya! #speaker: Jacke #portrait: jacke_cheery
         
         You seem shy, I promise I don’t bite. You don’t have to be all formal about thanking us, you know? It’s whatever. #speaker: Jacke #portrait: jacke_happy
 
-- Well, I’m gonna go get dinner started. I’ll let you guys chat and get you when we’re ready to eat. #speaker: Charlie #portrait:charlie_happy
+- Well, I’m gonna go get dinner started. I’ll let you guys chat and get you when we’re ready to eat. #speaker: Charlie #portrait:charlie_happy 
+
+#next_waypoint:Charlie 
+
 
 -> END
 
@@ -241,8 +248,141 @@ Hey, I’ve never been one for boring conversations. What do you say we play vid
 
 = DinnerTime
         
-- Hey guys, I’ve got dinner ready! #speaker: Charlie #portrait:charlie_happy
+- Hey guys, I’ve got dinner ready! #speaker: Charlie #portrait:charlie_happy #next_waypoint:Jacke
+#next_waypoint:Charlie
+~ dinnerready = true
+-> END
+
+===not_ready===
+Charlie is preparing dinner for the three of you. He seems pretty locked in. #speaker:Narrator #portrait:default 
+->END
+
+=== TRUTH ===
+
+{dinnerready: ->ready | ->not_ready}
+
+=== ready ===
+
+Thank you for including me in dinner. #speaker:Ashley
+
+Of course! It’s no problem at all. #speaker:Charlie
+
+So Ashley, I know you mentioned you were from pretty far away. Where are you from, anyway?
+
+If I told you, I don't think you would believe me… #speaker:Ashley
+
+Why not? Are you like… from another country or something? #speaker:Charlie
+
+More like another planet. #speaker:Ashley
+
+Pfft, right. #speaker:Jacke
+
+Is this a joke or something? I don’t get it… #speaker:Charlie
+
+I’m not joking! I’m from The Haevan, it’s another planet where humans live. I know Earthlings don’t really learn about us, but- #speaker:Ashley
+
+That doesn’t make any sense. Why are you lying to us? #speaker:Charlie
+
+I’m not! You deserve honesty! #speaker:Ashley
+
+Are you crazy or something? Charlie, did you bring a psycho into our house? #speaker:Jacke
+
+Maybe this was a mistake… Look, I’m not gonna kick you out into the storm, but you can’t stay here. You’re kinda freaking us out. #speaker:Charlie
+ 
+I’ll pack a container of food for you and I’ll write down the address of a shelter not too far from here, okay?
+
+Wait, I’m not trying to freak you out! I’m being serious! #speaker:Ashley
+
+Be grateful I’m packing you food, okay? I’ve been awfully nice to you considering you’re a stranger from the woods who’s telling crazy stories to dodge questions about where you’re from… #speaker:Charlie
+
+I'm not dodging questions! #speaker:Ashley
+
+Just get out, please… #speaker:Charlie
+
+#unlock_area:woods
+
+-> END
+}
+
+=== WAIT ===
+
+Hey! Wait up! #speaker:Charlie
+
+#next_waypoint:Charlie
+
+I’m sorry, that was rude of me to kick you out so fast… I’ll help you get to the shelter.
+
+-> END
+
+=== TutorialFight ===
+
+What the hell is that?! #speaker: Charlie #portrait:charlie_worried
+
+I… I don’t know! #speaker: Ashley #portrait:ashley_worried
+
+What do we do?! #speaker: Charlie #portrait:charlie_worried
+
+Stay behind me, I’ll handle this! #speaker: Ashley #portrait:ashley_worried
 
 -> END
 
 
+=== AFTERFIGHT ===
+
+Phew… How… How did you do all that?! You were so fast, I don’t understand. #speaker:Charlie
+
+Now you must believe me. I’m not from here, I’m from The Haevan. #speaker:Ashley
+
+This again? #speaker:Charlie
+
+I’m serious! I’m sure you have questions, and I’m happy to answer them. #speaker:Ashley
+
+-> QUESTIONS
+
+= QUESTIONS
+
+* What even is “The Haevan?” #speaker:Charlie
+    
+    It’s another planet where humans live, and everyone that lives there has their own implants that give them specific talents. #speaker:Ashley
+
+    VAR  followup = true
+
+    -> QUESTIONS
+
+* {followup} So, what is your talent then? Speed? #speaker:Charlie
+
+    …For simplicity’s sake, sure. It’s a little more nuanced than that, at least in my case, but yeah. #speaker:Ashley
+
+    -> QUESTIONS
+
+* This doesn’t make any sense. We didn’t even know that alien life existed, let alone ones that are so similar to humans. #speaker:Charlie
+
+    I am human, Charlie, everyone from The Haevan is. And Earthlings don’t know about us because your technology hasn’t advanced like ours has. You guys barely even have space travel! #speaker:Ashley
+
+    -> QUESTIONS
+
+* Do you have any idea what that thing was? #speaker:Charlie
+
+    I wish I did, but no. I’ve never seen anything like this before. I won’t lie, it’s pretty scary. #speaker:Ashley
+
+    -> QUESTIONS
+
+* Okay, I guess I kinda have to believe you now. #speaker:Charlie
+
+- Phew… Thank you. I’m sorry you had to deal with all this. I’ll go, I don’t want to put you in any more danger. #speaker:Ashley
+
+Hold on, you don’t have to go. I was quick to judge you, and I’m sorry. You’ve gotta admit it seems hard to believe. #speaker:Charlie
+
+I knew the Earthlings didn’t know about us, but you’re right, I didn’t consider just how hard it might be to convince one of them that we’re real. You all seem kinda stubborn, huh? #speaker:Ashley
+
+Gee… Thanks. Look, if those things come back, I don’t want you out here on your own. And I definitely don’t want them coming after us without you around. I can’t put Jacke in that kind of danger! #speaker:Charlie
+
+Please, come back to the house. You can stay with us as long as you want.
+
+Really? Thank you so much! I really appreciate it. #speaker:Ashley
+
+Of course. Now let's get out of this storm before that thing wakes up. #speaker:Charlie
+
+#quest_add:Q002
+
+-> END

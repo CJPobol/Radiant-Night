@@ -16,7 +16,7 @@ Hey, I’ve never been one for boring conversations. What do you say we play vid
         Sure, go for it. #speaker: Jacke #portrait: jacke_neutral
         -> JackeTalk2
         
-===JackeTalk2 ===
+= JackeTalk2
     * Is it just you and Charlie that live here? #speaker: Ashley #portrait:ashley_neutral
         ~ JackeFriendship -= 20
         
@@ -54,7 +54,7 @@ Hey, I’ve never been one for boring conversations. What do you say we play vid
         ->DinnerTime
         
 
-=== DinnerTime ===
+= DinnerTime
         
 - Hey guys, I’ve got dinner ready! #speaker: Charlie #portrait:charlie_happy
 
