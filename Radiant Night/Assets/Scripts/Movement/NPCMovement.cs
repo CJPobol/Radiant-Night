@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCMovement : MonoBehaviour
 {
     [SerializeField] public string NPCName;
-    [SerializeField] private Sprite sprite;
+    [SerializeField] private Sprite idle_sprite, walking_sprite;
     [SerializeField] private Transform startingPosition;
 
     public GameObject[] waypoints;  // Array of waypoints for the NPC to follow
@@ -97,8 +97,18 @@ public class NPCMovement : MonoBehaviour
                 {
                     transform.position = Vector3.Lerp(startPosition, targetWaypoint.position, elapsedTime / journeyTime);
                     elapsedTime += Time.deltaTime;
+                    if (targetWaypoint.transform.position.x > transform.position.x)
+                    {
+                        GetComponent<SpriteRenderer>().flipX = false;
+                    }
+                    else if (targetWaypoint.transform.position.x < transform.position.x)
+                    {
+                        GetComponent<SpriteRenderer>().flipX = true;
+                    }
                     yield return null;
                 }
+
+                
 
                 transform.position = targetWaypoint.position; // Snap to exact position
                 currentWaypointIndex++;
@@ -116,12 +126,14 @@ public class NPCMovement : MonoBehaviour
     // Set the NPC to stop and wait for the player (when dialogue starts)
     public void WaitAtWaypoint()
     {
+        this.GetComponent<SpriteRenderer>().sprite = idle_sprite;
         isWaiting = true;
     }
 
     // Set the NPC to stop waiting and resume movement
     public void StopWaiting()
     {
+        this.GetComponent<SpriteRenderer>().sprite = walking_sprite;
         isWaiting = false;
         //StopCoroutine(MoveAlongWaypoints());
         StartMoving();
