@@ -60,3 +60,6 @@ TagManager:
   - name: Overlay Object
     uniqueID: 1115721357
     locked: 0
+  - name: Filter
+    uniqueID: 1888348119
+    locked: 0

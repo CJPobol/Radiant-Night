@@ -153,7 +153,6 @@ public class DialogueManager : MonoBehaviour
             
             //display dialogue line
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
-            Debug.Log(currentStory.variablesState["dinnerready"]);
             
             HandleTags(currentStory.currentTags);
         }

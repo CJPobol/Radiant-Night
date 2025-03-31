@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     {
         if (!Player.model)
         {
-            Player.SetGender(true, null, null);
+            Player.SetGender(true, null, null, null);
         }
         player.GetComponent<SpriteRenderer>().sprite = Player.model;
         rb = GetComponent<Rigidbody2D>();
@@ -64,8 +64,12 @@ public class Movement : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().flipX = false;
         }
-
-        if (GetComponent<Rigidbody2D>().velocity != Vector2.zero)
+        
+        if (GetComponent<Rigidbody2D>().velocity.y != 0)
+        {
+            player.GetComponent<SpriteRenderer>().sprite = Player.jumping_model;
+        }
+        else if (GetComponent<Rigidbody2D>().velocity.x != 0)
         {
             player.GetComponent<SpriteRenderer>().sprite = Player.walking_model;
         }

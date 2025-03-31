@@ -4552,7 +4552,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPCName: Jacke
-  sprite: {fileID: 0}
+  idle_sprite: {fileID: 21300000, guid: e783b4149dc8877498a18d84ab37aa9e, type: 3}
+  walking_sprite: {fileID: 21300000, guid: e783b4149dc8877498a18d84ab37aa9e, type: 3}
   startingPosition: {fileID: 1930293221}
   waypoints:
   - {fileID: 871709848}
@@ -7361,7 +7362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPCName: Charlie
-  sprite: {fileID: 0}
+  idle_sprite: {fileID: 21300000, guid: 3a93eb1abf44a5942b46b55855e3cd81, type: 3}
+  walking_sprite: {fileID: 21300000, guid: 4250e6875ab5b1140a64828c5ed7d0c7, type: 3}
   startingPosition: {fileID: 544649150}
   waypoints:
   - {fileID: 1328426841}
@@ -12949,7 +12951,7 @@ GameObject:
   - component: {fileID: 1660903179}
   m_Layer: 0
   m_Name: GrassyFloor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
