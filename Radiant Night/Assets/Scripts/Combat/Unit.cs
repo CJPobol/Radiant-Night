@@ -22,6 +22,8 @@ public class Unit : MonoBehaviour
 
     public int cooldown;
 
+    public float A2Charge;
+
     [HideInInspector] public bool isSelected;
     [HideInInspector] public bool isDead;
 

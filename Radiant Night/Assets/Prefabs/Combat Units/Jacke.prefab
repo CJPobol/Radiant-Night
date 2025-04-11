@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3a93eb1abf44a5942b46b55855e3cd81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e783b4149dc8877498a18d84ab37aa9e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -360,10 +360,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1508081943047583536}
   - component: {fileID: -1672458815608823487}
-  - component: {fileID: 5716237828700252630}
   - component: {fileID: -4666034857563289457}
   m_Layer: 5
-  m_Name: Charlie
+  m_Name: Jacke
   m_TagString: CombatUnit
   m_Icon: {fileID: 2800000, guid: d147d899c7095424f8d6133531fd7d79, type: 3}
   m_NavMeshLayer: 0
@@ -398,32 +397,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a36b87096d16dc44a7971e7d7f520e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Charlie
+  unitName: Jacke
   unitLevel: 1
-  maxHP: 150
-  currentHP: 150
+  maxHP: 100
+  currentHP: 100
   healthbar: {fileID: 4015817727745549573}
-  atk: 40
-  def: 50
-  speed: 60
+  atk: 50
+  def: 20
+  speed: 70
   order: 0
   critChance: 0.1
   critDmg: 1.5
   cooldown: 0
   isSelected: 0
   isDead: 0
---- !u!114 &5716237828700252630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5763318181049780808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf3a75739b7d2e44081ce3757016dd0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &-4666034857563289457
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class Ashley : MonoBehaviour, IAttackable
                 enemies[i].currentHP -= rawDamage - defendedDamage;
             }
         }
+        self.A2Charge += Mathf.Clamp(0.1f, 0, 1);
         battle.turnActive = false;
         self.order = 0;
         battle.NextInOrder();
@@ -57,7 +59,7 @@ public class Ashley : MonoBehaviour, IAttackable
         battle.selectedUnit = null;
         Debug.Log("Action complete! Ending Ashley's turn...");
 
-        
+        self.A2Charge += Mathf.Clamp(0.2f, 0, 1);
         self.cooldown = 2;
         battle.NextInOrder();
     }
@@ -65,6 +67,15 @@ public class Ashley : MonoBehaviour, IAttackable
     public void SpecialAtk2(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses special attack 2!");
+        
+        foreach (Unit enemy in enemies)
+        {
+            if (enemy == null) continue;
+            Debug.Log("enemy order is " + enemy.order);
+            enemy.order -= enemy.order * (0.5f / (1f / self.A2Charge));
+            Debug.Log("lowered order to " + enemy.order);
+        }
+        Debug.Log("Action complete! Ending Ashley's turn...");
         self.order = 0;
         battle.NextInOrder();
     }
