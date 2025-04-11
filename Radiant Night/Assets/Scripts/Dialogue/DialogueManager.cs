@@ -257,6 +257,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator DisplayLine(string line)
     {
+        dialoguePanel.GetComponent<AudioSource>().Play();
         //empty dialogue text
         dialogueTextDisplay.text = "";
 
@@ -274,8 +275,11 @@ public class DialogueManager : MonoBehaviour
                 break;
             }
             dialogueTextDisplay.text += c;
+            
             yield return new WaitForSeconds(textSpeed);
         }
+
+        dialoguePanel.GetComponent<AudioSource>().Stop();
 
         canGoNextLine = true;
         skipDialogue = false;
