@@ -15,6 +15,17 @@ public enum battleState
     LOSE
 }
 
+public struct enemy 
+{
+    Sprite model;
+    Transform station;
+    IAttackable skillset;
+    Unit unit;
+
+
+}
+
+
 public class BattleSystem : MonoBehaviour
 {
     private static BattleSystem instance;
