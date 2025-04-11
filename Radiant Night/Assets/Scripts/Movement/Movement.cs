@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     public LayerMask groundLayer;
     private Collider2D playerCollider;
     public GameObject player;
+    public Animator movementAnimator;
 
     private bool onLeftWall, onRightWall;
     private bool isGrounded;
@@ -67,14 +68,14 @@ public class Movement : MonoBehaviour
         
         if (GetComponent<Rigidbody2D>().velocity.y != 0)
         {
-            player.GetComponent<SpriteRenderer>().sprite = Player.jumping_model;
+            movementAnimator.Play("ashley_jumping");
         }
         else if (GetComponent<Rigidbody2D>().velocity.x != 0)
         {
-            player.GetComponent<SpriteRenderer>().sprite = Player.walking_model;
+            movementAnimator.Play("ashley_walking");
         }
         else
-            player.GetComponent<SpriteRenderer>().sprite = Player.model;
+            movementAnimator.Play("ashley_idle");
     }
 
     void OnCollisionEnter2D(Collision2D hit)
