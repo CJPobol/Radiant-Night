@@ -36,7 +36,7 @@ public class Ashley : MonoBehaviour, IAttackable
     public void SpecialAtk1(Unit self, Unit[] allies, Unit[] enemies)
     {
         Debug.Log("Ashley uses special attack 1!");
-        for (int i = 0; i < battle.enemySelectors.Length; i++)
+        for (int i = 0; i < battle.playerSelectors.Length; i++)
         {
             battle.playerSelectors[i].SetActive(true);
         }
