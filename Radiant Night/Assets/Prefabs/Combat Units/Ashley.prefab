@@ -422,6 +422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Ashley
   unitLevel: 1
+  friendly: 1
   maxHP: 100
   currentHP: 100
   healthbar: {fileID: 4015817727745549573}

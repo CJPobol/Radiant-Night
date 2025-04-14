@@ -422,6 +422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Charlie
   unitLevel: 1
+  friendly: 1
   maxHP: 150
   currentHP: 150
   healthbar: {fileID: 4015817727745549573}

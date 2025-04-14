@@ -36,7 +36,8 @@ public class BattleSystem : MonoBehaviour
 
 
     public GameObject characterSelector;
-    public TextMeshProUGUI namePanel;
+    public TextMeshProUGUI namePanel, infoboard;
+    public Button atk1;
 
     GameObject[] playerCharacter = { null, null, null, null, null };
     public GameObject[] playerSelectors;
@@ -66,7 +67,8 @@ public class BattleSystem : MonoBehaviour
     [HideInInspector] public bool isSelectingAllyUnit = false;
     [HideInInspector] public bool isSelectingEnemyUnit = false;
 
-    [HideInInspector] public Unit selectedUnit = null;
+    [HideInInspector] public Unit selectedAlly = null;
+    [HideInInspector] public Unit selectedEnemy = null;
 
     [HideInInspector] public bool turnActive;
 
@@ -177,7 +179,15 @@ public class BattleSystem : MonoBehaviour
 
     public void OnSelection(GameObject characterStation)
     {
-        selectedUnit = characterStation.GetComponentInChildren<Unit>();
+        Unit tempunit = characterStation.GetComponentInChildren<Unit>();
+        if (tempunit.friendly) 
+        {
+            selectedAlly = tempunit;
+        }
+        else
+        {
+            selectedEnemy = tempunit;
+        }
     }
 
     public void SetupBattle()
@@ -262,7 +272,20 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(EnemyAction());
         }
         
-        namePanel.text = currentUnit.unitName; 
+        namePanel.text = currentUnit.unitName;
+        infoboard.text = 
+            "Health: " + currentUnit.currentHP + "/" + currentUnit.maxHP +
+            "\nOrder: " + currentUnit.order + 
+            "\nA2 Charge: " + currentUnit.A2Charge*100 + "%";
+        
+        if (currentUnit.cooldown > 0)
+        {
+            UITools.DisableButton(atk1);
+        }
+        else
+        {
+            UITools.EnableButton(atk1);
+        }
     }
 
     public IEnumerator EnemyAction()

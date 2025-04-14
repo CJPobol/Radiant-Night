@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class UITools : MonoBehaviour
 {
-    public void DisableButton(Button self)
+    public static void DisableButton(Button self)
     {
         self.interactable = false;
+    }
+    public static void EnableButton(Button self)
+    {
+        self.interactable = true;
     }
 }

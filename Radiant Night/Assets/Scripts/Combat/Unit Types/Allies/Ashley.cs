@@ -10,7 +10,7 @@ public class Ashley : MonoBehaviour, IAttackable
 
     private void Start()
     {
-        combatManager = GameObject.FindObjectOfType<BattleSystem>()?.gameObject;
+        combatManager = FindObjectOfType<BattleSystem>()?.gameObject;
         battle = combatManager.GetComponent<BattleSystem>();
     }
 
@@ -48,15 +48,15 @@ public class Ashley : MonoBehaviour, IAttackable
         self.order = 0;
         battle.isSelectingAllyUnit = true;
         Debug.Log("Waiting for ally selection...");
-        yield return new WaitUntil(() => battle.selectedUnit != null);
+        yield return new WaitUntil(() => battle.selectedAlly != null);
 
-        Debug.Log($"Selected Enemy {battle.selectedUnit.unitName}");
-        Unit ally = battle.selectedUnit;
+        Debug.Log($"Selected Enemy {battle.selectedAlly.unitName}");
+        Unit ally = battle.selectedAlly;
 
         ally.order += 100;
 
-        battle.selectedUnit.Deselect();
-        battle.selectedUnit = null;
+        battle.selectedAlly.Deselect();
+        battle.selectedAlly = null;
         Debug.Log("Action complete! Ending Ashley's turn...");
 
         self.A2Charge += Mathf.Clamp(0.2f, 0, 1);

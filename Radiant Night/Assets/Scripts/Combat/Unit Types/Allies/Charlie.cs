@@ -29,14 +29,15 @@ public class Charlie : MonoBehaviour, IAttackable
     {
         battle.isSelectingEnemyUnit = true;
         Debug.Log("Waiting for enemy selection...");
-        yield return new WaitUntil(() => battle.selectedUnit != null);
-        Debug.Log($"Selected Enemy {battle.selectedUnit.unitName}");
-        Unit enemy = battle.selectedUnit;
+        yield return new WaitUntil(() => battle.selectedEnemy != null);
+        
+        Debug.Log($"Selected Enemy {battle.selectedEnemy.unitName}");
+        Unit enemy = battle.selectedEnemy;
 
         enemy.currentHP -= self.atk;
         battle.isSelectingEnemyUnit = false;
-        battle.selectedUnit.Deselect();
-        battle.selectedUnit = null;
+        battle.selectedEnemy.Deselect();
+        battle.selectedEnemy = null;
         Debug.Log("Action complete! Ending Charlie's turn...");
         battle.turnActive = false;
         self.order = 0;
@@ -62,17 +63,17 @@ public class Charlie : MonoBehaviour, IAttackable
         self.order = 0;
         battle.isSelectingAllyUnit = true;
         Debug.Log("Waiting for ally selection...");
-        yield return new WaitUntil(() => battle.selectedUnit != null);
+        yield return new WaitUntil(() => battle.selectedEnemy != null);
 
-        Debug.Log($"Selected {battle.selectedUnit.unitName}");
-        Unit ally = battle.selectedUnit;
+        Debug.Log($"Selected {battle.selectedEnemy.unitName}");
+        Unit ally = battle.selectedEnemy;
 
         ally.currentHP += (int)(ally.maxHP * 0.3);
         if (ally.currentHP > ally.maxHP)
             ally.currentHP = ally.maxHP;
 
-        battle.selectedUnit.Deselect();
-        battle.selectedUnit = null;
+        battle.selectedEnemy.Deselect();
+        battle.selectedEnemy = null;
         Debug.Log("Action complete! Ending Charlie's turn...");
 
         self.A2Charge += Mathf.Clamp(0.2f, 0, 1);

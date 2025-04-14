@@ -9,7 +9,7 @@ public class Jacke : MonoBehaviour, IAttackable
 
     private void Start()
     {
-        combatManager = GameObject.FindObjectOfType<BattleSystem>()?.gameObject;
+        combatManager = FindObjectOfType<BattleSystem>()?.gameObject;
         battle = combatManager.GetComponent<BattleSystem>();
     }
 
@@ -28,14 +28,14 @@ public class Jacke : MonoBehaviour, IAttackable
     {
         battle.isSelectingEnemyUnit = true;
         Debug.Log("Waiting for enemy selection...");
-        yield return new WaitUntil(() => battle.selectedUnit != null);
-        Debug.Log($"Selected Enemy {battle.selectedUnit.unitName}");
-        Unit enemy = battle.selectedUnit;
+        yield return new WaitUntil(() => battle.selectedEnemy != null);
+        Debug.Log($"Selected Enemy {battle.selectedEnemy.unitName}");
+        Unit enemy = battle.selectedEnemy;
 
         enemy.currentHP -= self.atk;
         battle.isSelectingEnemyUnit = false;
-        battle.selectedUnit.Deselect();
-        battle.selectedUnit = null;
+        battle.selectedEnemy.Deselect();
+        battle.selectedEnemy = null;
         Debug.Log("Action complete! Ending Jacke's turn...");
         battle.turnActive = false;
         self.order = 0;
