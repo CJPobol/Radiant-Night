@@ -121,6 +121,7 @@ public class QuestManager : MonoBehaviour
         questItem.GetComponentInChildren<TextMeshProUGUI>().text = quest.questName;
         questItem.GetComponent<QuestTypeDisplay>().category = quest.questCategory;
         questItem.GetComponent<Button>().onClick.AddListener(() => ShowQuestDetails(quest));
+        
         StartCoroutine(MakePopup());
     }
 
