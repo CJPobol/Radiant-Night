@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     public LayerMask groundLayer;
     private Collider2D playerCollider;
     public GameObject player;
-    public Animator movementAnimator;
+    private Animator movementAnimator;
 
     private bool onLeftWall, onRightWall;
     private bool isGrounded;
@@ -25,6 +25,7 @@ public class Movement : MonoBehaviour
         player.GetComponent<SpriteRenderer>().sprite = Player.model;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
+        movementAnimator = player.GetComponent<Animator>();
 
         isGrounded = false;
     }
@@ -34,7 +35,7 @@ public class Movement : MonoBehaviour
     {
         if (DialogueManager.GetInstance().dialogueIsPlaying || QuestManager.GetInstance().questSystem.gameObject.activeSelf)
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, rb.velocity.y);
             return;
         }
 

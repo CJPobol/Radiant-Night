@@ -7,17 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class SceneTrigger : MonoBehaviour
 {
-    public bool locationTrigger;
-    public Vector2 location;
-    public string locationName;
-
-    public bool sceneTrigger;
-    public string sceneName;
-
     public bool forceTrigger;
 
     public GameObject player;
     public GameObject visualCue;
+
+    [Header("------LOCATION TRIGGER------")]
+    public bool locationTrigger;
+    public GameObject location;
+    public string locationName;
+
+    [Header("------SCENE TRIGGER------")]
+    public bool sceneTrigger;
+    public string sceneName;
+
+    
     
     private bool playerInRange;
     private bool locked;
@@ -74,7 +78,7 @@ public class SceneTrigger : MonoBehaviour
     {
         if (locationTrigger)
         {
-            player.transform.position = location;
+            player.transform.position = location.transform.position;
         }
         else if (sceneTrigger)
         {

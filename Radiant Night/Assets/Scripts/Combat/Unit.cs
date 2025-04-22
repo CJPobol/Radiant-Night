@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
 {
     public string unitName;
     public int unitLevel;
+    public bool friendly;
 
     public int maxHP;
     public int currentHP;
@@ -21,6 +22,8 @@ public class Unit : MonoBehaviour
     public float critDmg;
 
     public int cooldown;
+
+    public float A2Charge;
 
     [HideInInspector] public bool isSelected;
     [HideInInspector] public bool isDead;

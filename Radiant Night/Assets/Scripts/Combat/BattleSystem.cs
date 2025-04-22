@@ -15,6 +15,17 @@ public enum battleState
     LOSE
 }
 
+public struct enemy 
+{
+    Sprite model;
+    Transform station;
+    IAttackable skillset;
+    Unit unit;
+
+
+}
+
+
 public class BattleSystem : MonoBehaviour
 {
     private static BattleSystem instance;
@@ -25,7 +36,8 @@ public class BattleSystem : MonoBehaviour
 
 
     public GameObject characterSelector;
-    public TextMeshProUGUI namePanel;
+    public TextMeshProUGUI namePanel, infoboard;
+    public Button atk1;
 
     GameObject[] playerCharacter = { null, null, null, null, null };
     public GameObject[] playerSelectors;
@@ -43,16 +55,20 @@ public class BattleSystem : MonoBehaviour
 
     Unit[] playerUnits = { null, null, null, null, null };
     IAttackable[] playerSkillSet = { null, null, null, null, null };
+    Animator[] playerAnimators = { null, null, null, null, null };
     Unit[] enemyUnits = { null, null, null, null, null };
     IAttackable[] enemySkillSet = { null, null, null, null, null };
+    Animator[] enemyAnimators = { null, null, null, null, null };
 
     Unit currentUnit;
     IAttackable currentSkillSet;
+    Animator currentAnimator;
 
     [HideInInspector] public bool isSelectingAllyUnit = false;
     [HideInInspector] public bool isSelectingEnemyUnit = false;
 
-    [HideInInspector] public Unit selectedUnit = null;
+    [HideInInspector] public Unit selectedAlly = null;
+    [HideInInspector] public Unit selectedEnemy = null;
 
     [HideInInspector] public bool turnActive;
 
@@ -120,6 +136,7 @@ public class BattleSystem : MonoBehaviour
             enemy[i] = enemies[i];
             enemyUnits[i] = Instantiate(enemies[i], enemyStation[i]).GetComponent<Unit>();
             enemySkillSet[i] = enemies[i].GetComponent<IAttackable>();
+            enemyAnimators[i] = enemies[i].GetComponentInChildren<Animator>();
         }
     }
 
@@ -162,7 +179,15 @@ public class BattleSystem : MonoBehaviour
 
     public void OnSelection(GameObject characterStation)
     {
-        selectedUnit = characterStation.GetComponentInChildren<Unit>();
+        Unit tempunit = characterStation.GetComponentInChildren<Unit>();
+        if (tempunit.friendly) 
+        {
+            selectedAlly = tempunit;
+        }
+        else
+        {
+            selectedEnemy = tempunit;
+        }
     }
 
     public void SetupBattle()
@@ -174,8 +199,8 @@ public class BattleSystem : MonoBehaviour
             if (playerCharacter[i] != null) 
             {
                 playerUnits[i] = playerCharacter[i].GetComponent<Unit>();
-                Debug.Log(playerUnits[i].unitName);
                 playerSkillSet[i] = playerCharacter[i].GetComponent<IAttackable>();
+                playerAnimators[i] = playerCharacter[i].GetComponentInChildren<Animator>();
             }
         }
 
@@ -209,6 +234,8 @@ public class BattleSystem : MonoBehaviour
         Unit nextEnemy = enemyUnits[0];
         IAttackable PnextSkillSet = playerSkillSet[0];
         IAttackable EnextSkillSet = enemySkillSet[0];
+        Animator PnextAnim = playerAnimators[0];
+        Animator EnextAnim = enemyAnimators[0];
         for (int i = 1; i < playerUnits.Length; i++)
         {
             if (playerUnits[i] == null) continue;
@@ -216,6 +243,7 @@ public class BattleSystem : MonoBehaviour
             {
                 nextPlayer = playerUnits[i];
                 PnextSkillSet = playerSkillSet[i];
+                PnextAnim = playerAnimators[i];
             }
         }
         for (int i = 1; i < enemyUnits.Length; i++)
@@ -225,6 +253,7 @@ public class BattleSystem : MonoBehaviour
             {
                 nextEnemy = enemyUnits[i];
                 EnextSkillSet = enemySkillSet[i];
+                EnextAnim = enemyAnimators[i];
             }
         }
         if (nextPlayer.order >= nextEnemy.order)
@@ -232,27 +261,44 @@ public class BattleSystem : MonoBehaviour
             state = battleState.PLAYERTURN;
             currentUnit = nextPlayer;
             currentSkillSet = PnextSkillSet;
+            currentAnimator = PnextAnim;
         }
         else if (nextPlayer.order < nextEnemy.order)
         {
             state = battleState.ENEMYTURN;
             currentUnit = nextEnemy;
             currentSkillSet = EnextSkillSet;
+            currentAnimator = EnextAnim;
             StartCoroutine(EnemyAction());
         }
         
-        namePanel.text = currentUnit.unitName; 
+        namePanel.text = currentUnit.unitName;
+        infoboard.text = 
+            "Health: " + currentUnit.currentHP + "/" + currentUnit.maxHP +
+            "\nOrder: " + currentUnit.order + 
+            "\nA2 Charge: " + currentUnit.A2Charge*100 + "%";
+        
+        if (currentUnit.cooldown > 0)
+        {
+            UITools.DisableButton(atk1);
+        }
+        else
+        {
+            UITools.EnableButton(atk1);
+        }
     }
 
     public IEnumerator EnemyAction()
     {
+        yield return new WaitForSeconds(1f);
         if (state != battleState.ENEMYTURN)
         {
             yield break;
         }
         currentSkillSet.BasicAtk(currentUnit, playerUnits, enemyUnits);
         currentUnit.order = 0;
-        yield return new WaitForSeconds(2f);
+        currentAnimator.SetTrigger("onAttack");
+        yield return new WaitForSeconds(1f);
         NextInOrder();
     }
     
@@ -264,6 +310,7 @@ public class BattleSystem : MonoBehaviour
         }
         turnActive = true;
         currentUnit.cooldown -= 1;
+        currentAnimator.SetTrigger("onAttack");
         currentSkillSet.BasicAtk(currentUnit, playerUnits, enemyUnits);
         //NOTE: immediately goes back to NextInOrder with this function call ^
     }
@@ -278,6 +325,7 @@ public class BattleSystem : MonoBehaviour
             return;
         }
         turnActive = true;
+        currentAnimator.SetTrigger("onAttack");
         currentSkillSet.SpecialAtk1(currentUnit, playerUnits, enemyUnits);
         //NOTE: immediately goes back to NextInOrder with this function call ^
     }
@@ -288,6 +336,7 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
+        currentAnimator.SetTrigger("onAttack");
         currentSkillSet.SpecialAtk2(currentUnit, playerUnits, enemyUnits);
         //NOTE: immediately goes back to NextInOrder with this function call ^
     }

@@ -263,41 +263,41 @@ Charlie is preparing dinner for the three of you. He seems pretty locked in. #sp
 
 === ready ===
 
-Thank you for including me in dinner. #speaker:Ashley
+Thank you for including me in dinner. #speaker:Ashley #portrait:ashley_happy
 
-Of course! It’s no problem at all. #speaker:Charlie
+Of course! It’s no problem at all. #speaker:Charlie #portrait:charlie_happy
 
 So Ashley, I know you mentioned you were from pretty far away. Where are you from, anyway?
 
-If I told you, I don't think you would believe me… #speaker:Ashley
+If I told you, I don't think you would believe me… #speaker:Ashley #portrait:ashley_neutral
 
-Why not? Are you like… from another country or something? #speaker:Charlie
+Why not? Are you like… from another country or something? #speaker:Charlie #portrait:charlie_happy
 
-More like another planet. #speaker:Ashley
+More like another planet. #speaker:Ashley #portrait:ashley_angry
 
-Pfft, right. #speaker:Jacke
+Pfft, right. #speaker:Jacke #portrait:jacke_happy
 
-Is this a joke or something? I don’t get it… #speaker:Charlie
+Is this a joke or something? I don’t get it… #speaker:Charlie #portrait:charlie_neutral
 
-I’m not joking! I’m from The Haevan, it’s another planet where humans live. I know Earthlings don’t really learn about us, but- #speaker:Ashley
+I’m not joking! I’m from The Haevan, it’s another planet where humans live. I know Earthlings don’t really learn about us, but- #speaker:Ashley #portrait:ashley_neutral
 
-That doesn’t make any sense. Why are you lying to us? #speaker:Charlie
+That doesn’t make any sense. Why are you lying to us? #speaker:Charlie #portrait:charlie_angry
 
-I’m not! You deserve honesty! #speaker:Ashley
+I’m not! You deserve honesty! #speaker:Ashley #portrait:ashley_angry
 
-Are you crazy or something? Charlie, did you bring a psycho into our house? #speaker:Jacke
+Are you crazy or something? Charlie, did you bring a psycho into our house? #speaker:Jacke #portrait:jacke_angry
 
-Maybe this was a mistake… Look, I’m not gonna kick you out into the storm, but you can’t stay here. You’re kinda freaking us out. #speaker:Charlie
+Maybe this was a mistake… Look, I’m not gonna kick you out into the storm, but you can’t stay here. You’re kinda freaking us out. #speaker:Charlie #portrait:charlie_angry
  
 I’ll pack a container of food for you and I’ll write down the address of a shelter not too far from here, okay?
 
-Wait, I’m not trying to freak you out! I’m being serious! #speaker:Ashley
+Wait, I’m not trying to freak you out! I’m being serious! #speaker:Ashley #portrait:ashley_neutral
 
-Be grateful I’m packing you food, okay? I’ve been awfully nice to you considering you’re a stranger from the woods who’s telling crazy stories to dodge questions about where you’re from… #speaker:Charlie
+Be grateful I’m packing you food, okay? I’ve been awfully nice to you considering you’re a stranger from the woods who’s telling crazy stories to dodge questions about where you’re from… #speaker:Charlie #portrait:charlie_angry
 
-I'm not dodging questions! #speaker:Ashley
+I'm not dodging questions! #speaker:Ashley #portrait:ashley_neutral
 
-Just get out, please… #speaker:Charlie
+Just get out, please… #speaker:Charlie #portrait:charlie_angry
 
 #unlock_area:woods
 
@@ -308,9 +308,9 @@ Just get out, please… #speaker:Charlie
 
 #next_waypoint:Charlie
 
-Hey! Wait up! #speaker:Charlie
+Hey! Wait up! #speaker:Charlie #portrait:charlie_angry
 
-I’m sorry, that was rude of me to kick you out so fast… I’ll help you get to the shelter.
+I’m sorry, that was rude of me to kick you out so fast… I’ll help you get to the shelter. #portrait:charlie_neutral
 
 #follower:Charlie
 
@@ -318,72 +318,72 @@ I’m sorry, that was rude of me to kick you out so fast… I’ll help you get 
 
 === TutorialFight ===
 
-What the hell is that?! #speaker: Charlie #portrait:charlie_worried
+What the hell is that?! #speaker: Charlie #portrait:charlie_angry
 
-I… I don’t know! #speaker: Ashley #portrait:ashley_worried
+I… I don’t know! #speaker: Ashley #portrait:ashley_angry
 
-What do we do?! #speaker: Charlie #portrait:charlie_worried
+What do we do?! #speaker: Charlie #portrait:charlie_angry
 
-Stay behind me, I’ll handle this! #speaker: Ashley #portrait:ashley_worried
+Stay behind me, I’ll handle this! #speaker: Ashley #portrait:ashley_angry
 
 -> END
 
 
 === AFTERFIGHT ===
 
-Phew… How… How did you do all that?! You were so fast, I don’t understand. #speaker:Charlie
+Phew… How… How did you do all that?! You were so fast, I don’t understand. #speaker:Charlie #portrait:charlie_angry
 
-Now you must believe me. I’m not from here, I’m from The Haevan. #speaker:Ashley
+Now you must believe me. I’m not from here, I’m from The Haevan. #speaker:Ashley #portrait:ashley_angry
 
-This again? #speaker:Charlie
+This again? #speaker:Charlie #portrait:charlie_angry
 
-I’m serious! I’m sure you have questions, and I’m happy to answer them. #speaker:Ashley
+I’m serious! I’m sure you have questions, and I’m happy to answer them. #speaker:Ashley #portrait:ashley_angry
 
 -> QUESTIONS
 
 = QUESTIONS
 
-* What even is “The Haevan?” #speaker:Charlie
+* What even is “The Haevan?” #speaker:Charlie #portrait:charlie_neutral
     
-    It’s another planet where humans live, and everyone that lives there has their own implants that give them specific talents. #speaker:Ashley
+    It’s another planet where humans live, and everyone that lives there has their own implants that give them specific talents. #speaker:Ashley #portrait:ashley_neutral
 
     VAR  followup = true
 
     -> QUESTIONS
 
-* {followup} So, what is your talent then? Speed? #speaker:Charlie
+* {followup} So, what is your talent then? Speed? #speaker:Charlie #portrait:charlie_neutral
 
-    …For simplicity’s sake, sure. It’s a little more nuanced than that, at least in my case, but yeah. #speaker:Ashley
-
-    -> QUESTIONS
-
-* This doesn’t make any sense. We didn’t even know that alien life existed, let alone ones that are so similar to humans. #speaker:Charlie
-
-    I am human, Charlie, everyone from The Haevan is. And Earthlings don’t know about us because your technology hasn’t advanced like ours has. You guys barely even have space travel! #speaker:Ashley
+    …For simplicity’s sake, sure. It’s a little more nuanced than that, at least in my case, but yeah. #speaker:Ashley #portrait:ashley_neutral
 
     -> QUESTIONS
 
-* Do you have any idea what that thing was? #speaker:Charlie
+* This doesn’t make any sense. We didn’t even know that alien life existed, let alone ones that are so similar to humans. #speaker:Charlie #portrait:charlie_angry
 
-    I wish I did, but no. I’ve never seen anything like this before. I won’t lie, it’s pretty scary. #speaker:Ashley
+    I am human, Charlie, everyone from The Haevan is. And Earthlings don’t know about us because your technology hasn’t advanced like ours has. You guys barely even have space travel! #speaker:Ashley #portrait:ashley_neutral
 
     -> QUESTIONS
 
-* Okay, I guess I kinda have to believe you now. #speaker:Charlie
+* Do you have any idea what that thing was? #speaker:Charlie #portrait:charlie_neutral
 
-- Phew… Thank you. I’m sorry you had to deal with all this. I’ll go, I don’t want to put you in any more danger. #speaker:Ashley
+    I wish I did, but no. I’ve never seen anything like this before. I won’t lie, it’s pretty scary. #speaker:Ashley #portrait:ashley_angry
 
-Hold on, you don’t have to go. I was quick to judge you, and I’m sorry. You’ve gotta admit it seems hard to believe. #speaker:Charlie
+    -> QUESTIONS
 
-I knew the Earthlings didn’t know about us, but you’re right, I didn’t consider just how hard it might be to convince one of them that we’re real. You all seem kinda stubborn, huh? #speaker:Ashley
+* Okay, I guess I kinda have to believe you now. #speaker:Charlie #portrait:charlie_neutral
 
-Gee… Thanks. Look, if those things come back, I don’t want you out here on your own. And I definitely don’t want them coming after us without you around. I can’t put Jacke in that kind of danger! #speaker:Charlie
+- Phew… Thank you. I’m sorry you had to deal with all this. I’ll go, I don’t want to put you in any more danger. #speaker:Ashley #portrait:ashley_happy
+
+Hold on, you don’t have to go. I was quick to judge you, and I’m sorry. You’ve gotta admit it seems hard to believe. #speaker:Charlie #portrait:charlie_neutral
+
+I knew the Earthlings didn’t know about us, but you’re right, I didn’t consider just how hard it might be to convince one of them that we’re real. You all seem kinda stubborn, huh? #speaker:Ashley #portrait:ashley_neutral
+
+Gee… Thanks. Look, if those things come back, I don’t want you out here on your own. And I definitely don’t want them coming after us without you around. I can’t put Jacke in that kind of danger! #speaker:Charlie #portrait:charlie_neutral
 
 Please, come back to the house. You can stay with us as long as you want.
 
-Really? Thank you so much! I really appreciate it. #speaker:Ashley
+Really? Thank you so much! I really appreciate it. #speaker:Ashley #portrait:ashley_happy
 
-Of course. Now let's get out of this storm before that thing wakes up. #speaker:Charlie
+Of course. Now let's get out of this storm before that thing wakes up. #speaker:Charlie #portrait:charlie_happy
 
 #quest_add:Q002
 

@@ -125,8 +125,10 @@ public class DialogueManager : MonoBehaviour
         //list of npcs in scene that can be referenced by tags.
         npcs = FindObjectsOfType<NPCMovement>();
 
-        //locks idle model
-        player.GetComponent<SpriteRenderer>().sprite = Player.model;
+        //locks idle model (still not working completely)
+        player.GetComponent<Animator>().SetBool("DialogueMode", true);
+        
+        
         if (newStory)
         {
             currentStory = new Story(inkJSON.text);
@@ -257,6 +259,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator DisplayLine(string line)
     {
+        dialoguePanel.GetComponent<AudioSource>().Play();
         //empty dialogue text
         dialogueTextDisplay.text = "";
 
@@ -274,8 +277,11 @@ public class DialogueManager : MonoBehaviour
                 break;
             }
             dialogueTextDisplay.text += c;
+            
             yield return new WaitForSeconds(textSpeed);
         }
+
+        dialoguePanel.GetComponent<AudioSource>().Stop();
 
         canGoNextLine = true;
         skipDialogue = false;
@@ -299,6 +305,8 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         cutscenePanel.SetActive(false);
+        //UNLOCKS idle model
+        player.GetComponent<Animator>().SetBool("DialogueMode", false);
         Debug.Log("Exiting Dialogue Mode.");
     }
 
