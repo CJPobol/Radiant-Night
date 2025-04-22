@@ -18,16 +18,17 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        if (!Player.model)
-        {
-            Player.SetGender(true, null, null, null);
-        }
-        player.GetComponent<SpriteRenderer>().sprite = Player.model;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         movementAnimator = player.GetComponent<Animator>();
 
         isGrounded = false;
+    }
+
+    //manual update of position from save/load system
+    public void UpdatePosition(Vector2 position)
+    {
+        player.transform.position = position;
     }
 
     // Update is called once per frame

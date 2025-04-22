@@ -7,6 +7,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float delay;
     private Vector2 velocity = Vector2.zero;
 
+    //allows the camera to follow the player's movement (interpolated)
     private void Update()
     {
         Player player = FindObjectOfType<Player>();

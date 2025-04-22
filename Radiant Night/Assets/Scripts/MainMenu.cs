@@ -5,14 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class newgame : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] Camera cam;
     [SerializeField] Canvas mainCanvas, characterCanvas;
-    [SerializeField] Sprite ashley, ashton, ashley_walk, ashley_jump;
 
     Cutscene cutscene;
-    
 
     private void Start()
     {
@@ -36,7 +34,6 @@ public class newgame : MonoBehaviour
 
     public void SelectCharacter(bool fem)
     {
-        Player.SetGender(fem, ashley, ashley_walk, ashley_jump);
         StartCoroutine(HandleStartGame());
     }
 
@@ -48,4 +45,6 @@ public class newgame : MonoBehaviour
         SceneManager.UnloadSceneAsync("001_MainMenu");
         Cutscene.GetInstance().StartCutscene();
     }
+
+
 }
