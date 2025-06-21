@@ -122,6 +122,7 @@ public class DialogueManager : MonoBehaviour
     //new knots within the same quest you've been doing.
     public void EnterDialogueMode(TextAsset inkJSON, bool newStory, String knot = "")
     {
+        
         //list of npcs in scene that can be referenced by tags.
         npcs = FindObjectsOfType<NPCMovement>();
 
@@ -139,6 +140,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         dialogueIsPlaying = true;
+        MenuManager.GetInstance().menuState = MenuManager.MenuState.DIALOGUE_INTERFACE;
         dialoguePanel.SetActive(true);
         Debug.Log("Dialogue Panel set to active");
 
@@ -156,6 +158,7 @@ public class DialogueManager : MonoBehaviour
             //display dialogue line
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
             
+            
             HandleTags(currentStory.currentTags);
         }
         else
@@ -168,6 +171,7 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (string tag in tags)
         {
+            Debug.Log(tag);
             string[] splitTag = tag.Split(':');
             if (splitTag.Length != 2)
             {
@@ -196,7 +200,7 @@ public class DialogueManager : MonoBehaviour
                         case "on":
                             cutscenePanel.SetActive(true);
                             break;
-                        case "fade_out":
+                        case "fade_in":
                             StartCoroutine(FadeOut(cutscenePanel.GetComponent<CanvasGroup>()));
                             break;
                         case "off":
@@ -308,6 +312,7 @@ public class DialogueManager : MonoBehaviour
         //UNLOCKS idle model
         player.GetComponent<Animator>().SetBool("DialogueMode", false);
         Debug.Log("Exiting Dialogue Mode.");
+        MenuManager.MenuState menuState = MenuManager.MenuState.NONE;
     }
 
     private void DisplayChoices()

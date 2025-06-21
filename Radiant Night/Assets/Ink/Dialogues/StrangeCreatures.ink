@@ -1,33 +1,65 @@
 === CREATURES ===
+
 Jacke! Where are you? #speaker:Charlie #portrait:Charlie_neutral
+
 I’m right here, dude. What’s wrong? Why is she back? #speaker:Jacke #portrait:Jacke_neutral #next_waypoint:Jacke
+
 I know it’s crazy, but she was really telling the truth!   #speaker:Charlie #portrait:Charlie_neutral
+
+
 We just fought some big robot monster thing, I don’t even know what it was really.
+
 She took the thing down, like she’s got magic powers or something!
+
 Not quite magic, but- #speaker:Ashley #portrait:Ashley_neutral
+
 Are you guys serious?  #speaker:Jacke #portrait:Jacke_neutral
+
 Well I mean, of course you fought something, I can see that you guys are hurt, but magic powers? Weird monsters?
+
 It’s more like tech enhancements than anything- #speaker:Ashley #portrait:Ashley_neutral
+
 I saw it for myself, Jacke. All this stuff is real.  #speaker:Charlie #portrait:Charlie_neutral
+
 I don’t know what that thing we fought was, and neither does she, but she is telling us the truth.
+
 Wait, Ash, you don’t know what they are? #speaker:Jacke #portrait:Jacke_angry
+
 (...Do I talk now...?) #speaker:Ashley #portrait:Ashley_angry
+
 Sadly no, I assume they aren’t typical Earth creatures though, judging by Charlie’s reaction. #portrait:Ashley_neutral
+
 They probably came to Earth just like I did, but that’s all I know, and even that is just an assumption.
+
 Whoa… I have to see this for myself. Why don’t I come with you tomorrow and we’ll go hunt more of these things down? #speaker:Jacke #portrait:Jacke_happy
+
 I’d love to have some help, thank you! #speaker:Ashley #portrait:Ashley_happy
+
 Hey, hey, hold on guys… Jacke, I don’t know if I really want you going out there and causing trouble with these things. I don’t want you to get hurt.  #speaker:Charlie #portrait:Charlie_neutral
+
 Ashley, I’ll come with you instead.
+
 Are you serious?! I’m twenty years old! Don’t treat me like a baby, Char, I got this. #speaker:Jacke #portrait:Jacke_angry
+
 No way, I need you to stay home and away from whatever those are, at least until we know more about what we’re dealing with. #speaker:Charlie #portrait:Charlie_angry
+
 You think you’d be better in a fight than me, dude? #speaker:Jacke #portrait:Jacke_angry
+
 That’s not at all what I’m saying, I just don’t want you to get into a fight at all! #speaker:Charlie #portrait:Charlie_angry
+
 Why don’t you just let Ash decide then? Ashley, which of us would you wanna take with you to hunt down monsters? #speaker:Jacke #portrait:Jacke_angry
+
 What?! Don’t let me pick, I just met you guys. #speaker:Ashley #portrait:Ashley_neutral
+
 You don’t have to decide tonight. It’s getting late, how about we go in the morning? #speaker:Charlie #portrait:Charlie_angry
+
 You mean we go in the morning, as in me and her. #speaker:Jacke #portrait:Jacke_angry
+
 Regardless! Sounds like a good idea. I’m exhausted. #speaker:Ashley #portrait:Ashley_neutral
+
 -> END
+
+
 === RAINSTORM ===
 Hey. #speaker:Charlie #portrait:Charlie_neutral #next_waypoint:Charlie
 Charlie? What are you doing awake? #speaker:Ashley #portrait:Ashley_neutral

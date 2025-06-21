@@ -6,6 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] float delay;
     private Vector2 velocity = Vector2.zero;
+    private float Zoffset = -10f;
 
     //allows the camera to follow the player's movement (interpolated)
     private void Update()
@@ -19,7 +20,7 @@ public class CameraMovement : MonoBehaviour
         Vector2 smoothedPosition = Vector2.SmoothDamp(transform.position, targetPosition, ref velocity, 0.3f);
 
         // Apply the smoothed position while keeping the camera’s Z position
-        transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);
+        transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, Zoffset);
     }
 
 }

@@ -211,10 +211,14 @@ public class QuestManager : MonoBehaviour
     {
         if (questSystem.gameObject.activeSelf)
         {
+            MenuManager.GetInstance().menuState = MenuManager.MenuState.NONE;
             questSystem.gameObject.SetActive(false);
         }
         else
+        {
+            MenuManager.GetInstance().menuState = MenuManager.MenuState.QUEST_MENU;
             questSystem.gameObject.SetActive(true);
+        }
     }
 }
 

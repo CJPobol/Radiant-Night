@@ -10,14 +10,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] Canvas mainCanvas, characterCanvas;
 
-    Cutscene cutscene;
-
     private void Start()
     {
-        Debug.Log(DialogueManager.GetInstance());
-        cutscene = Cutscene.GetInstance();
-        cutscene.skip_cutscene = false;
-
+        MenuManager.GetInstance().menuState = MenuManager.MenuState.MAIN_MENU;
         cam.transform.position = new Vector3(0, 0, 0);
         mainCanvas.GetComponentInChildren<Canvas>().enabled = true;
         characterCanvas.GetComponentInChildren<Canvas>().enabled = false;
@@ -39,11 +34,9 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator HandleStartGame()
     {
-        SceneManager.LoadScene("002_Tutorial", LoadSceneMode.Additive);
-        yield return new WaitUntil(() => SceneManager.loadedSceneCount == 2);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("002_Tutorial"));
-        SceneManager.UnloadSceneAsync("001_MainMenu");
-        Cutscene.GetInstance().StartCutscene();
+        //MenuManager.GetInstance().menuState = MenuManager.MenuState.NONE;
+        yield return null;
+        DialogueManager.GetInstance().GetComponent<Cutscene>().StartCutscene();
     }
 
 
